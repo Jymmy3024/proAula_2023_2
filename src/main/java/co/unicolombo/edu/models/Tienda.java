@@ -1,6 +1,5 @@
 package co.unicolombo.edu.models;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tiendas", schema = "dbo", catalog = "proAula_6")
+@Table(name = "tiendas", schema = "dbo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
