@@ -4,11 +4,13 @@ import co.unicolombo.edu.models.Tienda;
 import co.unicolombo.edu.repositories.TiendaRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author jimmy
  */
+@Service
 public class TiendaServicioImp implements ITiendaServicio{
     
     @Autowired
@@ -53,17 +55,32 @@ public class TiendaServicioImp implements ITiendaServicio{
 
     @Override
     public Tienda buscarTienda(Tienda tienda) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Tienda tifind = tiendaRepo.findById(tienda.getCodigo()).orElse(null);
+        if(tifind == null){
+            throw new Exception("La Tienda que desea buscar No existe.");
+        }else{
+            return tifind;
+        }
     }
 
     @Override
-    public List<Tienda> buscarTiendaPorNombre(String nombre) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Tienda> buscarTiendasPorNombre(String nombre) throws Exception {
+        List<Tienda> listTi = tiendaRepo.findByNombreContaining(nombre);
+        if(listTi == null || listTi.isEmpty()){
+            throw new Exception("La Tienda(s) que intenta buscar no existe.");
+        }else{
+            return listTi;
+        }
     }
 
     @Override
     public boolean existeTienda(Tienda tienda) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        boolean tExist = tiendaRepo.existsById(tienda.getCodigo());
+        if(!tExist){
+            throw new Exception("La Tienda No existe");
+        }else{
+            return tExist;        
+        }
     }
     
 }

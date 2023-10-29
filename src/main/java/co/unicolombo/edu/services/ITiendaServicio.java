@@ -15,7 +15,7 @@ public interface ITiendaServicio {
     
     public Tienda buscarTienda(Tienda tienda) throws Exception;
     
-    public List<Tienda> buscarTiendaPorNombre(String nombre) throws Exception;
+    public List<Tienda> buscarTiendasPorNombre(String nombre) throws Exception;
     
     public boolean existeTienda(Tienda tienda) throws Exception;
             

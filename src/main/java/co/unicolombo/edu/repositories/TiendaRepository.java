@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TiendaRepository extends JpaRepository<Tienda, Integer>{
-    List<Tienda> findByName(String nombre);
+    List<Tienda> findByNombreContaining(String nombre);
 }
