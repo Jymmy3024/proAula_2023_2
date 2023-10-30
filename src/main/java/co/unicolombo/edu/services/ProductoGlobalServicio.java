@@ -15,4 +15,6 @@ public interface ProductoGlobalServicio {
     
     public List<ProductoGlobal> listAll(String palabraClave);
     
+    public ProductoGlobal getByCodigo(Integer codigo); 
+    
 }

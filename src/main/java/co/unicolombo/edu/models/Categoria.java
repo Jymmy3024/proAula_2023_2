@@ -39,9 +39,10 @@ public class Categoria implements Serializable {
     @Column(name = "detalles", nullable = false, length = 200)
     private String detalles;
 
-    //Una categoria tiene muchos libros
+    //Una categoria tiene muchos ProductosGlobales
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     private List<ProductoGlobal> listaProductosGlobales;
+
     /* 
     fetch = FetchType.LAZY : Consulta perezosa: no se cargaran los 
     productos cada vez que se cree una categoria
@@ -50,8 +51,15 @@ public class Categoria implements Serializable {
     mappedBy:  el atributo de la clase que recibe la referencia
 
     no se coloca columna ya que no es necesaria
-    */
-    
-    
+     */
+
+    @Override
+    public String toString() {
+        return "Categoria{"
+                + " id = " + this.id
+                + ", nombre = " + this.nombre
+                + ", detalles = " + this.detalles
+                + " }";
+    }
 
 }

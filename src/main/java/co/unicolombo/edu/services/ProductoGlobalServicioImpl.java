@@ -27,5 +27,10 @@ public class ProductoGlobalServicioImpl implements ProductoGlobalServicio{
         }
         return repositorio.findAll();
     }
+
+    @Override
+    public ProductoGlobal getByCodigo(Integer codigo) {
+        return repositorio.findById(codigo).get();
+    }
     
 }

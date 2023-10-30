@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -45,10 +46,19 @@ public class Producto implements Serializable{
     @Column(name="stock", nullable=true)
     private int stock;
     
+    
     @Column(name="disponibilidad", nullable=false)
-    private boolean disponibilidad;
+    private boolean disponibilidad = true;//valor por defecto true
     
     @NotNull
     @Column(name="precio_unitario", nullable=false, precision = 10, scale = 4)
     private BigDecimal precioUnitario;
+    
+    @NotNull
+    @Column(name="pum", nullable=true, precision = 10, scale = 4)
+    private BigDecimal pum;
+    
+    @NotEmpty
+    @Column(name="estado", nullable=true)
+    private String estado;
 }
