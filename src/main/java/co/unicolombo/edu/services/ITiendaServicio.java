@@ -2,10 +2,12 @@ package co.unicolombo.edu.services;
 
 import co.unicolombo.edu.models.Tienda;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface ITiendaServicio {
-    public List<Tienda> listarTiendas() throws Exception;
+    public Page<Tienda> listarTiendas(Pageable pageable) throws Exception;
     
     public void agregarTienda(Tienda tienda) throws Exception;
     
@@ -15,9 +17,9 @@ public interface ITiendaServicio {
     
     public Tienda buscarTienda(Tienda tienda) throws Exception;
     
-    public List<Tienda> buscarTiendaPorNombre(String nombre) throws Exception;
+    public List<Tienda> buscarTiendasPorNombre(String nombre) throws Exception;
     
-    public boolean existeTienda(Tienda tienda) throws Exception;
+    public boolean existeTienda(Tienda tienda);
             
            
 }

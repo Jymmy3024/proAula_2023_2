@@ -48,7 +48,7 @@ public class ProductoController {
         
         //le pasamos la tienda
         /*************LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION**/
-        sesion.setAttribute("tienda", new Tienda(888,"Tiendas Ara el mejor","Tiendas ARA","","Supermercado"));
+        sesion.setAttribute("tienda", new Tienda(888,"Tiendas Ara el mejor","Tiendas ARA","","Supermercado",null));
         
         
         Tienda t = (Tienda)sesion.getAttribute("tienda");
