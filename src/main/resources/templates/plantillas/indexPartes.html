@@ -23,7 +23,7 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="#" target="contenido">
                                     <img src="https://cdn-icons-png.flaticon.com/512/4064/4064227.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                                    Productos</a>
+                                    Promociones</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="#" target="contenido">
@@ -33,13 +33,18 @@
                         </ul>
 
                         <div class="navbar-nav pt-2">
+                            <li class="nav-item pe-2">
+                                <a class="nav-link active" href="#" target="contenido">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/3916/3916624.png" alt="CarIcon" width="30" height="24" class="d-inline-block align-text-top">
+                                </a>
+                            </li>
                             <ul class="navbar-nav">
                                 <li class="nav-item pe-2">
                                     <a class="btn btn-primary" href="#" target="contenido">Login</a>
                                 </li>
                             </ul>
                             <form class="d-flex" role="search" th:action="@{/}" method="get">
-                                <input class="form-control me-2" type="search" placeholder="Buscar Productos" aria-label="Search">
+                                <input class="form-control me-2" type="search" placeholder="Buscar Tienda(s)" aria-label="Search">
                                 <button class="btn btn-success" type="submit">Buscar</button>
                             </form>
                         </div>
@@ -54,7 +59,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <footer th:fragment="piePagina">
             <div class="ps-3 pb-1 pt-4">
-                <a th:href="@{#}" class="fw-bold">SerTUTITender</a>
+                <a th:href="@{/inicio/registrar-tienda}" class="fw-bold">SerTUTITender</a>
             </div>
         </footer>
     </body>

@@ -22,38 +22,52 @@
                                     <div class="col-12 user-img text-center">
                                         <img src="https://static.vecteezy.com/system/resources/previews/022/425/513/non_2x/icon-shop-building-elements-icons-in-blue-round-style-good-for-prints-web-posters-logo-site-plan-map-infographics-etc-vector.jpg" width="200px"/>
                                     </div>
-                                    <form class="p-3 col-md-6" th:action="@{/guardar-tienda}" method="POST" th:object="${tienda}">
-                                        <div class="form-group pb-4">
-                                            <label for="codigo" class="fw-bold">Codigo:</label>
-                                            <input type="number" class="form-control" name="codigo" id="codigo" th:field="*{codigo}" placeholder="" readonly="true"/>
-                                        </div>
+                                    <div th:if="${tExist}" class="pt-4 pb-4">
+                                        <span th:text="${msjTEx}" class="alert alert-warning  fw-bold fs-5"></span>
+                                    </div>
+                                    <div th:if="${tNExist}" class="p-4 " >
+                                        <span th:text="${msjTR}" class="alert alert-success fw-bold fs-5"></span>
+                                    </div>
+                                    <form class="p-3 col-md-6" th:action="@{/inicio/guardar-tienda}" method="POST" th:object="${tienda}" enctype="multipart/form-data">
                                         <div class="form-group pb-4">
                                             <label for="nit" class="fw-bold">Nit:</label>
-                                            <input type="number" placeholder="Digite su NIT" class="form-control" name="nit" id="nit" th:field="*{nit}"  required/>
+                                            <input placeholder="Digite el NIT de la Tienda" type="number" class="form-control"  name="nit" id="nit" th:field="*{nit}"/>
+                                            <div th:if="${#fields.hasErrors('nit')}" class="p-1">
+                                                <span class="text-danger fw-bold fs-7" th:errors="*{nit}"></span>
+                                            </div>
                                         </div>
                                         <div class="form-group pb-4">
                                             <label for="nombre" class="fw-bold">Nombre:</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre" th:field="*{nombre}" required/>
+                                            <input type="text" class="form-control" name="nombre" id="nombre" th:field="*{nombre}" placeholder="Digite el nombre de la Tienda"/>
+                                            <div th:if="${#fields.hasErrors('nombre')}" class="p-1">
+                                                <span class="text-danger fw-bold fs-7" th:errors="*{nombre}"></span>
+                                            </div>
                                         </div>
                                         <div class="form-group pb-4">
                                             <label for="descripcion" class="fw-bold">Descripción:</label>
-                                            <input type="text" class="form-control" name="descripcion" id="descripcion" th:field="*{descripcion}" required/>
+                                            <input type="text" class="form-control" name="descripcion" id="descripcion" th:field="*{descripcion}" placeholder="Digite la descripción de la Tienda"/>
                                         </div>
                                         <div class="form-group pb-4">
-                                            <label for="file" class="fw-bold">Imagen:</label>
-                                            <input type="file" class="form-control-file" name="file" id="file" th:field="*{ruta_imagen}" required />
+                                            <label for="imagen" class="fw-bold">Imagen:</label>
+                                            <input type="file" class="form-control-file" id="imagen" name="imagen"/>
+                                            <div th:if="${#fields.hasErrors('imagen')}" class="p-1">
+                                                <span class="text-danger fw-bold fs-7" th:errors="*{imagen}"></span>
+                                            </div>
                                         </div>
                                         <div class="form-group pb-4">
                                             <label for="tipo" class="fw-bold">Tipo:</label>
-                                            <select class="form-select" name="tipo" id="tipo" required>
+                                            <select class="form-select" name="tipo" id="tipo" th:field="*{tipo}">
                                                 <option value="">Seleccionar</option>
-                                                <option value="Optienda">Tienda</option>
-                                                <option value="OpSuperM">Supermercado</option>
+                                                <option value="Tienda">Tienda</option>
+                                                <option value="Supermercado">Supermercado</option>
                                             </select>
+                                            <div th:if="${#fields.hasErrors('tipo')}" class="p-1">
+                                                <span class="text-danger fw-bold fs-7" th:errors="*{tipo}"></span>
+                                            </div>   
                                         </div>
-                                        <button type="submit" class="btn btn-primary">
-                                            Registrar
-                                        </button>
+                                        <div class="text-end">
+                                        <button type="submit" class="btn btn-primary">Registrar</button>
+                                        </div>
                                     </form>
                                 </div>
                         
