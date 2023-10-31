@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -58,7 +57,20 @@ public class Producto implements Serializable{
     @Column(name="pum", nullable=true, precision = 10, scale = 4)
     private BigDecimal pum;
     
-    @NotEmpty
     @Column(name="estado", nullable=true)
-    private String estado;
+    private String estado = "Activo";
+    
+    @Override
+    public String toString(){
+        return "Producto{"
+                + "id = "+this.id
+                + ", tienda = "+this.tienda
+                + ", productoGlobal = "+this.productoGlobal
+                + ", stock = "+this.stock
+                + ", disponibilidad = "+this.disponibilidad
+                + ", precio_unitario = "+this.precioUnitario
+                + ", pum = "+this.pum
+                + ", estado = "+this.estado
+                + "}";
+    }    
 }

@@ -65,6 +65,7 @@ public class ProductoGlobal implements Serializable {
                 + ", nombre = " + this.nombre
                 + ", categoria = " + this.categoria
                 + ", descripcion = " + this.descripcion
-                + ", estado = " + this.estado;
+                + ", estado = " + this.estado
+                + "}";
     }
 }

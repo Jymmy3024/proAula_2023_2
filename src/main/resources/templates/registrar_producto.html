@@ -12,20 +12,33 @@
             <h1 class="text-center">Registrar Producto en la tienda</h1><br>
             <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
                 <div class="card-body">
-                    <form th:action="@{/productos}" th:object="${producto}" method="POST">                        
+                    <form th:action="@{/productos/agregar}" th:object="${producto}" method="POST">                        
 
                         <div clas="form-group" th:object="${producto}">
                             <h4 class="text-center">Detalles del Producto</h4>
                             <label>Stock : </label>
-                            <input type="text" name="stock" th:field="*{stock}" class="form-control" placeholder="Digite la cantidad de productos en stock : ">
+                            <input type="number" name="stock" th:field="*{stock}" class="form-control" placeholder="Digite la cantidad de productos en stock : ">
                             <br>
                             <label>Precio Unitario : </label>
-                            <input type="text" name="apellido1" th:field="*{precioUnitario}" class="form-control" placeholder="Digite el Precio del producto : " required >
+                            <input type="number" name="precioUnitario" th:field="*{precioUnitario}" class="form-control" placeholder="Digite el Precio del producto : " required >
                             <br>
                             <label>Precio por unidad de medida : </label>
-                            <input type="text" name="apellido1" th:field="*{precioUnitario}" class="form-control" placeholder="Digite el Precio por unidad de medida (g, ml, u): " required>
-                            <div class="input-group">
-                                <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                            <div>
+                                <div class="input">
+                                    <input th:field=*{pum} type="text">
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect03" aria-label="Example select with button addon">
+                                    <option selected>medida</option>
+                                    <option value="1">por gramo (g)</option>
+                                    <option value="2">por mililitro (ml)</option>
+                                    <option value="3">por unidad (u)</option>
+                                    <option value="4">por kilogramo (kg)</option>
+                                    <option value="5">no aplica<option>
+                                </select>
+                            </div>
+                            <input type="text" name="pum" th:field="*{pum}" class="form-control" placeholder="Digite el Precio por unidad de medida (g, ml, u): " required>
+                            <!--<div class="input-group">
+                                <input type="text" class="form-control" th:field="*{pum}" aria-label="Text input with dropdown button" required="">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Dropdown</button>
                                     <div class="dropdown-menu">
@@ -36,7 +49,7 @@
                                         <a class="dropdown-item" href="#">Separated link</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <br>
                             <label for="diponibilidad">¿Este producto esta disponible?</label>
                             <select class="form-control" th:field="*{disponibilidad}" name="disponibilidad">
@@ -50,15 +63,15 @@
                             <label>Cod Producto global : </label>
                             <input readonly type="text" name="codigopg" th:field="*{codigo}" class="form-control">
                             <label>Nombre general : </label>
-                            <input readonly type="text" name="nombre1" th:field="*{nombre}" class="form-control" placeholder="Digite su primer nombre : " required maxlength="15">
+                            <input readonly type="text" name="nombrepg" th:field="*{nombre}" class="form-control" placeholder="Digite su primer nombre : " required maxlength="15">
                         </div> 
                         <br>
                         <h4 class="text-center">Datos de la tienda</h4>
-                        <div clas="form-group" th:object="${tienda}">
-                            <label>cod Tienda : </label>
-                            <input readonly type="text" name="nombre1" th:field="*{codigo}" class="form-control" placeholder="Digite su primer nombre : " required maxlength="15">
+                        <div clas="form-group">
+                            <label>Cod nit Tienda : </label>
+                            <input readonly type="text" name="nit" th:value="${tienda.nit}" class="form-control" >
                             <label>Tienda : </label>
-                            <input readonly type="text" name="nombre1" th:field="*{nombre}" class="form-control" placeholder="Digite su primer nombre : " required maxlength="15">
+                            <input readonly type="text" name="nombret" th:value="${tienda.nombre}" class="form-control" >
                         </div>  
                         <br>
                         <div class="box-footer">

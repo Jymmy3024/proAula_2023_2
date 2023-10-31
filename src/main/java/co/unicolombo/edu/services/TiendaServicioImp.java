@@ -25,8 +25,8 @@ public class TiendaServicioImp implements ITiendaServicio{
 
     @Override
     public void agregarTienda(Tienda tienda) throws Exception {
-        if(tiendaRepo.existsById(tienda.getCodigo())){
-            throw new Exception("La Tienda con el codigo = " + tienda.getCodigo() + ", ya existe.");        
+        if(tiendaRepo.existsById(tienda.getNit())){
+            throw new Exception("La Tienda con el codigo = " + tienda.getNit()+ ", ya existe.");        
         }else{
             tiendaRepo.save(tienda);
         }
@@ -34,8 +34,8 @@ public class TiendaServicioImp implements ITiendaServicio{
 
     @Override
     public void editarTienda(Tienda tienda) throws Exception {
-        if(!tiendaRepo.existsById(tienda.getCodigo())){
-            throw new Exception("La Tienda que intenta editar con el codigo = " + tienda.getCodigo() + ", no existe.");        
+        if(!tiendaRepo.existsById(tienda.getNit())){
+            throw new Exception("La Tienda que intenta editar con el codigo = " + tienda.getNit()+ ", no existe.");        
         }else{
             tiendaRepo.save(tienda);
         }
@@ -43,7 +43,7 @@ public class TiendaServicioImp implements ITiendaServicio{
 
     @Override
     public void eliminarTienda(Tienda tienda) throws Exception {
-        Tienda tfind = tiendaRepo.findById(tienda.getCodigo()).orElse(null);
+        Tienda tfind = tiendaRepo.findById(tienda.getNit()).orElse(null);
         if(tfind == null){
             throw new Exception("La Tienda que desea elminar No existe.");
         }else{

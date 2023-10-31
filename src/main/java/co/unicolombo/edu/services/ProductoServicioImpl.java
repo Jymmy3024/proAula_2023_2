@@ -22,6 +22,10 @@ public class ProductoServicioImpl implements ProductoServicio{
     @Override
     public void guardarProducto(Producto producto) {
         
+        if(producto != null){
+            repositorio.save(producto);
+        }
+        
     }
     
 }

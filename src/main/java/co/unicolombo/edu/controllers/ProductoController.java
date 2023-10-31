@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,10 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductoController {
     
     @Autowired
-    ProductoGlobalServicio pgServicio;//REPOSITORIO DEL PRODUCTO GLOBAL
+    private ProductoGlobalServicio pgServicio;//REPOSITORIO DEL PRODUCTO GLOBAL
     
     @Autowired
-    ProductoServicio pServicio;//REPOSITORIO DEL PRODUCTO DE LA TIENDA
+    private ProductoServicio pServicio;//REPOSITORIO DEL PRODUCTO DE LA TIENDA
     
      
     @GetMapping("productos/agregar")//@param es para obtener el parametro de busqueda "?busqueda="
@@ -39,15 +40,15 @@ public class ProductoController {
     }
     
     @PostMapping("productos/registrar/")
-    public String showProductRegistrationForm(@RequestParam("codProdGlobal") Integer codigo, Model modelo, HttpSession sesion){
+    public String showProductRegistrationForm(@RequestParam("codProdGlobal") Integer codigoPg, Model modelo, HttpSession sesion){
         
-        //le pasamos el productoGlobal
-        ProductoGlobal pg = pgServicio.getByCodigo(codigo);
-        modelo.addAttribute("productoGlobal", pg);
+        //le pasamos el codigo del productoGlobal
+        //modelo.addAttribute("codigoProdGlobal", codigoPg);        
+        modelo.addAttribute("productoGlobal", pgServicio.getByCodigo(codigoPg));
         
         //le pasamos la tienda
         /*************LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION**/
-        sesion.setAttribute("tienda", new Tienda(888,"Tiendas Ara el mejor","Tiendas ARA","",888,"Supermercado"));
+        sesion.setAttribute("tienda", new Tienda(888,"Tiendas Ara el mejor","Tiendas ARA","","Supermercado"));
         
         
         Tienda t = (Tienda)sesion.getAttribute("tienda");
@@ -57,6 +58,21 @@ public class ProductoController {
         modelo.addAttribute("producto", p);
         
         return "registrar_producto";
+    }
+    
+    @PostMapping("productos/agregar")
+    public String guardarProducto(Producto producto, ProductoGlobal productoGlobal, HttpSession sesion){      
+        //System.out.println(codigo);
+        System.out.println(producto);
+        System.out.println(productoGlobal);
+        productoGlobal = pgServicio.getByCodigo(productoGlobal.getCodigo());
+        producto.setProductoGlobal(productoGlobal);
+        producto.setTienda((Tienda) sesion.getAttribute("tienda"));
+        System.out.println(producto);
+        
+        //guardamos el producto
+        pServicio.guardarProducto(producto);
+        return "redirect:/productos/agregar";
     }
 
 }

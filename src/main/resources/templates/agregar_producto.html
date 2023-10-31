@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <h2 class="text-center">Agregar Producto a la tienda</h2>
 
             <form th:action="@{/productos/agregar}" method="get">
-                
+
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="busqueda" th:value="${busqueda}" placeholder="Busque el Producto que desea agregar" aria-describedby="button-addon2">
                     <div class="input-group-append">
@@ -42,14 +42,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <div class="col-md-9">
                                             <div class="card-body">
                                                 <h5 class="card-title" th:text="${pg.nombre}">Nombre del producto</h5>
-                                                <p class="card-text" ><small class="text-muted" th:text="'codigo : ' + ${pg.codigo}">Codigo del producto</small></p>
-                                                <p class="card-text"><small class="text-muted" th:text="'categoria : '+${pg.categoria.nombre}">Categoria del producto</small></p>
+                                                <p class="card-text" ><small class="text-muted" th:text="'Codigo : ' + ${pg.codigo}">Codigo del producto</small></p>
+                                                <p class="card-text"><small class="text-muted" th:text="'Categoria : '+${pg.categoria.nombre}">Categoria del producto</small></p>
                                                 <p class="card-text" style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis" th:text="${pg.descripcion}">Descripcion del producto</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3 mr-3" style="text-align: right">
-                                         
+
                                         <form method="POST" th:action="@{/productos/registrar/}">
                                             <a class="btn btn-secondary">Ver</a> 
                                             <input type="hidden" id="codProdGlobal" name="codProdGlobal" th:value="${pg.codigo}">
@@ -60,13 +60,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </div>  
                         </div>
                         <div th:if="${#lists.isEmpty(productos)}">
-                            <small class='text-danger'>No se encontraron resultados</small>
-                        </div>
-                    </div>
+                            <small class='text-danger'>No se encontraron resultados</small>                        
+                            <form th:action="@{/producto_global/registrar}">
+                                <h5 class="text-muted">
+                                    Si no existe el producto puedes crearlo desde cero : <button type="submit" class="btn btn-link">Crear nuevo producto</button>
+                                </h5>
+                            </form>
+                        </div> 
+                    </div>   
                 </div>
+                <br>
+                <!--</div>-->
             </div>
-            <br>
-            <!--</div>-->
-        </div>
     </body>
 </html>
