@@ -17,9 +17,7 @@
     </head>
     <body>
         <header th:replace="~{plantillas/indexPartes :: cabecera}"></header>
-        <div class="p-2 text-dark fw-bold fs-1 text-center">
-            <h1>TIENDAS</h1>
-        </div>
+            <div th:replace="~{plantillas/indexPartes :: categorias}" class="text-start"></div>
         <div th:if="${tiendaList != null && !tiendaList.empty}" class="row row-cols-md-4 ps-4">
             <div class="col-sm-6 mb-3 mb-sm-0 ps-4 pe-4 pb-4" th:each="t : ${tiendaList}">
                 <a th:href="@{#}" class="text-decoration-none">
