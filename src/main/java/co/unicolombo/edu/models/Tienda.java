@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class Tienda implements Serializable{
     
-    private static final long SerialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "nit", nullable = false)
     @NotNull

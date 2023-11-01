@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,6 +44,17 @@ public class TiendaController {
 
     }
 
+    @GetMapping("inicio/listarCategoria/{tipo}")
+    public ModelAndView listarCategoriaTiendasBarrio(@PathVariable("tipo") String tipo,Pageable pageable)throws Exception{
+        try{
+            List<Tienda> listTC = tiendaCrud.listarPorCategoria(tipo);
+            return new ModelAndView("index")
+                    .addObject("tiendaList", listTC);
+        }catch(Exception e){
+            return new ModelAndView("index")
+                    .addObject("msjIni", e.getMessage());
+        }
+    }
     @GetMapping("inicio/registrar-tienda")
     public ModelAndView registrar(Tienda tienda) {
         return new ModelAndView("tienda/registrarTienda")

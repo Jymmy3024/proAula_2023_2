@@ -12,7 +12,7 @@
                         <header th:fragment="cabecera">
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <a class="navbar-brand fs-4 fw-bold" href="/inicio/" target="contenido">
+                                    <a class="navbar-brand fs-4 fw-bold" th:href="@{/inicio/}" target="contenido">
                                         <img src="https://cdn-icons-png.flaticon.com/512/3388/3388845.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                                             TUTI</a>
                                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,19 +67,19 @@
                                 <div class="offcanvas-body">
                                     <ul class="nav flex-column text-center">
                                         <li class="nav-item pb-4">
-                                            <a th:href="@{#}" class="nav-link">Supermercado</a>
+                                            <a th:href="@{/inicio/listarCategoria/{tipo}(tipo=Supermercado)}" class="nav-link">Supermercado</a>
+                                        </li>                            
+                                        <li class="nav-item pb-4">
+                                            <a th:href="@{/inicio/listarCategoria/{tipo}(tipo=Restaurante)}" class="nav-link">Restaurante</a>
                                         </li>
                                         <li class="nav-item pb-4">
-                                            <a th:href="@{#}" class="nav-link">Tienda de barrio</a>
+                                            <a th:href="@{/inicio/listarCategoria/{tipo}(tipo=Drogueria)}" class="nav-link">Drogueria</a>
                                         </li>
                                         <li class="nav-item pb-4">
-                                            <a th:href="@{#}" class="nav-link">Restaurantes</a>
+                                            <a th:href="@{/inicio/listarCategoria/{tipo}(tipo=TB)}" class="nav-link">Tienda de barrio</a>
                                         </li>
                                         <li class="nav-item pb-4">
-                                            <a th:href="@{#}" class="nav-link">Droguerias</a>
-                                        </li>
-                                        <li class="nav-item pb-4">
-                                            <a th:href="@{#}" class="nav-link">Ropa y Calzado</a>
+                                            <a th:href="@{/inicio/listarCategoria/{tipo}(tipo=RYC)}" class="nav-link">Ropa y Calzado</a>
                                         </li>
                                         <ul>
                                             </div>

@@ -58,8 +58,11 @@
                                             <label for="tipo" class="fw-bold">Tipo:</label>
                                             <select class="form-select" name="tipo" id="tipo" th:field="*{tipo}">
                                                 <option value="">Seleccionar</option>
-                                                <option value="Tienda">Tienda</option>
                                                 <option value="Supermercado">Supermercado</option>
+                                                <option value="Restaurante">Restaurante</option>
+                                                <option value="Drogueria">Drogueria</option>
+                                                <option value="TB">Tienda de Barrio</option>
+                                                <option value="RYC">Ropa y Calzado</option>
                                             </select>
                                             <div th:if="${#fields.hasErrors('tipo')}" class="p-1">
                                                 <span class="text-danger fw-bold fs-7" th:errors="*{tipo}"></span>
