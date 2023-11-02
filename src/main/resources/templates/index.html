@@ -31,8 +31,8 @@
                 </a>    
             </div>
             </div>
-        <div th:unless="${tiendaList != null && !tiendaList.empty}">
-            <span class="alert alert-danger" th:text="${msjIni}"></span>
+        <div th:unless="${tiendaList != null && !tiendaList.empty}" class="p-4 text-center">
+            <span class="alert alert-danger fw-bold fs-3 " th:text="${msjIni}"></span>
         </div>
 
         
