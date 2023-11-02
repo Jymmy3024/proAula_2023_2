@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author CDOG
@@ -28,8 +30,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "productos_global", schema = "dbo")
 public class ProductoGlobal implements Serializable {
 
-    @Id     //Indicamos que es la llave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Indicamos que la llave se genera automaticamente     
+    @Id     //Indicamos que es la llave primaria    
     @Column(name = "codigo", nullable = false) //Indicamos la columna en la tabla
     private int codigo;
 
@@ -51,12 +52,15 @@ public class ProductoGlobal implements Serializable {
     @NotEmpty
     @NotBlank
     @Column(name = "imagen", nullable = true, length = 200)
-    private String imagen;
+    private String ruta_imagen;
 
     @NotEmpty
     @NotBlank
     @Column(name = "estado", nullable = true, length = 15)
-    private String estado;
+    private String estado = "Activo";
+    
+    @Transient
+    private MultipartFile imagen;
 
     @Override
     public String toString() {

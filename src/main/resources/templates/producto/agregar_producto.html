@@ -11,6 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     </head>
     <body>
+        <header th:replace="~{plantillas/tiendaPartes :: cabecera}"></header>
         <br>
         <div class="container">
             <h2 class="text-center">Agregar Producto a la tienda</h2>
@@ -61,6 +62,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </div>
                         <div th:if="${#lists.isEmpty(productos)}">
                             <small class='text-danger'>No se encontraron resultados</small>                        
+                            <h5 class="text-muted">
+                                    Si no existe el producto puedes crearlo desde cero : <a class="btn btn-link" th:href="@{/producto_global/registrar}">Crear nuevo producto</a>
+                            </h5>
                             <form th:action="@{/producto_global/registrar}">
                                 <h5 class="text-muted">
                                     Si no existe el producto puedes crearlo desde cero : <button type="submit" class="btn btn-link">Crear nuevo producto</button>

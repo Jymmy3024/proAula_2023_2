@@ -17,4 +17,12 @@ public interface ProductoGlobalServicio {
     
     public ProductoGlobal getByCodigo(Integer codigo); 
     
+    public boolean existsBycodigo(Integer codigo);
+        
+    public boolean existsByNombre(String nombre); 
+    
+    public ProductoGlobal validar(ProductoGlobal productoGlobal) throws Exception;
+    
+    public void save(ProductoGlobal productoGlobal);
+    
 }

@@ -36,7 +36,7 @@ public class ProductoController {
         model.addAttribute("busqueda", busqueda);
         List<ProductoGlobal> resultados = pgServicio.listAll(busqueda);
         model.addAttribute("productos", resultados);        
-        return "agregar_producto";
+        return "producto/agregar_producto";
     }
     
     @PostMapping("productos/registrar/")
@@ -57,7 +57,7 @@ public class ProductoController {
         Producto p = new Producto();
         modelo.addAttribute("producto", p);
         
-        return "registrar_producto";
+        return "producto/registrar_producto";
     }
     
     @PostMapping("productos/agregar")
