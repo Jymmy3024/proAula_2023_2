@@ -13,7 +13,7 @@
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
                                     <a class="navbar-brand fs-4 fw-bold" th:href="@{/inicio/}" target="contenido">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/3388/3388845.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                                        <img th:src="@{/assets/{filename}(filename=logo.png)}" alt="Logo" width="55" height="35" class="d-inline-block align-text-top">
                                             TUTI</a>
                                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                         <span class="navbar-toggler-icon"></span>
@@ -43,8 +43,8 @@
                                                     <a class="btn btn-primary" href="#" target="contenido">Login</a>
                                                 </li>
                                             </ul>
-                                            <form class="d-flex" role="search" th:action="@{/}" method="get">
-                                                <input class="form-control me-2" type="search" placeholder="Buscar Tienda(s)" aria-label="Search">
+                                            <form class="d-flex" th:action="@{/inicio/buscar-tiendas}" role="search" method="POST">
+                                                <input class="form-control me-2" name="nombre" type="search" placeholder="Buscar Tienda(s)" aria-label="Search">
                                                     <button class="btn btn-success" type="submit">Buscar</button>
                                             </form>
                                         </div>
@@ -57,7 +57,7 @@
                             <a class="btn btn-dark pt-1" data-bs-toggle="offcanvas" href="#categorias" role="button" aria-expanded="false" aria-controls="categorias">
                                 Categorias
                             </a>
-                            <p class=" fw-bold fs-3 mx-auto">TIENDAS</p>
+                                <p class=" fw-bold fs-3 mx-auto pt-3" style="padding-right: 100px;">TIENDAS</p>
                             </div>
                             <div class="offcanvas offcanvas-start" style="width: 21rem;" id="categorias" aria-labelledby="categoriasLabel">
                                 <div class="offcanvas-header">

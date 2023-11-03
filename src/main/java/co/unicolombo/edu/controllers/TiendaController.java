@@ -34,8 +34,9 @@ public class TiendaController {
     public ModelAndView inicio(Pageable pageable) throws Exception {
         try {
             Page<Tienda> tiendaList = tiendaCrud.listarTiendas(pageable);
-            return new ModelAndView("index")
+            return new ModelAndView("index")   
                     .addObject("tiendaList", tiendaList);
+                    
         } catch (Exception e) {
             String msjIni = e.getMessage();
             return new ModelAndView("index")
@@ -45,7 +46,7 @@ public class TiendaController {
     }
 
     @GetMapping("inicio/listarCategoria/{tipo}")
-    public ModelAndView listarCategoriaTiendasBarrio(@PathVariable("tipo") String tipo,Pageable pageable)throws Exception{
+    public ModelAndView listarByCategoria(@PathVariable("tipo") String tipo,Pageable pageable)throws Exception{
         try{
             List<Tienda> listTC = tiendaCrud.listarPorCategoria(tipo);
             return new ModelAndView("index")
@@ -93,5 +94,26 @@ public class TiendaController {
                     .addObject("tExist", tExist)
                     .addObject("msjTEx", "Error: " + e.getMessage());
         }
+    }
+    
+    @PostMapping("inicio/buscar-tiendas")
+    public ModelAndView buscarTiendas(String nombre, Pageable pageable) throws Exception{
+        Page<Tienda> listTNE = tiendaCrud.listarTiendas(pageable);
+        try{
+            if(nombre.isBlank() || nombre.isEmpty()){
+                return new ModelAndView("index")
+                        .addObject("msjBT", "El campo para buscar no debe estar vacio")
+                        .addObject("tiendaList", listTNE);
+            }else{
+            List<Tienda> listTBN = tiendaCrud.buscarTiendasPorNombre(nombre);
+            return new ModelAndView("index")
+                    .addObject("tiendaList", listTBN);
+            }
+        }catch(Exception e){
+            return new ModelAndView("index")
+                    .addObject("msjBT", e.getMessage())
+                    .addObject("tiendaList", listTNE);
+        }
+        
     }
 }
