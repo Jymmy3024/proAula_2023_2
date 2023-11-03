@@ -23,6 +23,8 @@ public interface ProductoGlobalServicio {
     
     public ProductoGlobal validar(ProductoGlobal productoGlobal) throws Exception;
     
-    public void save(ProductoGlobal productoGlobal);
+    public void save(ProductoGlobal productoGlobal) throws Exception;
+    
+    
     
 }

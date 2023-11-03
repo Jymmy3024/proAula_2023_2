@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
 public interface ProductoGlobalRepository extends JpaRepository<ProductoGlobal, Integer>{
     
     @Query(value =  "SELECT * FROM productos_global pg WHERE CONCAT(pg.nombre, pg.descripcion, pg.codigo) LIKE %?1% ORDER BY pg.nombre DESC", nativeQuery = true)
-    public List<ProductoGlobal> findAll(String palabraClave);
-    
+    public List<ProductoGlobal> findAll(String palabraClave);    
+
 }

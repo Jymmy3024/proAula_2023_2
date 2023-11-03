@@ -82,4 +82,9 @@ public class TiendaServicioImp implements ITiendaServicio{
             return tExist;        
     }
     
+    @Override
+    public Tienda obtenerPorNit(Integer nit){
+        return this.tiendaRepo.findById(nit).get();
+    }
+    
 }

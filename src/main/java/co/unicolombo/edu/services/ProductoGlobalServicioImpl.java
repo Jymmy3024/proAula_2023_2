@@ -15,15 +15,15 @@ import org.springframework.stereotype.Service;
  * @author CDOG
  */
 @Service
-public class ProductoGlobalServicioImpl implements ProductoGlobalServicio{
+public class ProductoGlobalServicioImpl implements ProductoGlobalServicio {
 
     @Autowired
     private ProductoGlobalRepository repositorio;
-    
+
     @Override
     public List<ProductoGlobal> listAll(String palabraClave) {
-        if(palabraClave != null && !palabraClave.isEmpty()){
-            return repositorio.findAll(palabraClave);            
+        if (palabraClave != null && !palabraClave.isEmpty()) {
+            return repositorio.findAll(palabraClave);
         }
         return repositorio.findAll();
     }
@@ -44,38 +44,39 @@ public class ProductoGlobalServicioImpl implements ProductoGlobalServicio{
     }
 
     @Override
-    public ProductoGlobal validar(ProductoGlobal productoGlobal) throws Exception{
-        
+    public ProductoGlobal validar(ProductoGlobal productoGlobal) throws Exception {
+
         productoGlobal.setNombre(productoGlobal.getNombre().trim());
-        productoGlobal.setDescripcion(productoGlobal.getDescripcion().trim());        
-        
-        if(productoGlobal == null){
+        productoGlobal.setDescripcion(productoGlobal.getDescripcion().trim());
+
+        if (productoGlobal == null) {
             throw new Exception("El producto no puede ser nulo");
-        }else if(productoGlobal.getCodigo() > 0 ){
-            if(this.existsBycodigo(productoGlobal.getCodigo())){
-                throw new Exception("El producto con codigo "+productoGlobal.getCodigo()+" ya existe.");
+        } else if (productoGlobal.getCodigo() > 0) {
+            if (this.existsBycodigo(productoGlobal.getCodigo())) {
+                throw new Exception("El producto con codigo " + productoGlobal.getCodigo() + " ya existe.");
             }
-        }else{
+        } else {
             throw new Exception("Eror en el codigo del producto");
         }
-        
-        if(productoGlobal.getNombre() == null ){
+
+        if (productoGlobal.getNombre() == null) {
             throw new Exception("El producto no puede ser nulo");
-        }else if(productoGlobal.getNombre().isEmpty() || productoGlobal.getNombre().isEmpty()){
-            if(this.existsByNombre(productoGlobal.getNombre())){
-                throw new Exception("El producto con nombre "+productoGlobal.getNombre()+" ya existe.");
+        } else if (!productoGlobal.getNombre().isBlank() && !productoGlobal.getNombre().isEmpty()) {
+            if (this.existsByNombre(productoGlobal.getNombre())) {
+                throw new Exception("El producto con nombre " + productoGlobal.getNombre() + " ya existe.");
             }
-        }else{
+        } else {
             throw new Exception("Eror en el nombre del producto");
         }
-        
+
         return productoGlobal;
-        
+
     }
 
     @Override
-    public void save(ProductoGlobal productoGlobal) {
-       this.repositorio.save(productoGlobal);
+    public void save(ProductoGlobal productoGlobal) throws Exception {
+        productoGlobal = this.validar(productoGlobal);        
+        this.repositorio.save(productoGlobal);
     }
 
 

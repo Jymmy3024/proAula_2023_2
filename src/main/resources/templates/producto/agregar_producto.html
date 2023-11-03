@@ -35,10 +35,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <div th:if="${! #lists.isEmpty(productos)}">
                             <div th:each="pg : ${productos}">
                                 <br>
-                                <div class="card    " style="max-width: 100%;">
+                                <div class="card" style="max-width: 100%;">
                                     <div class="row no-gutters" style="height: 200px; ">
-                                        <div class="card-md-3 ml-3" style="overflow: hidden; max-height: 100%">
-                                            <img style="width: 150px; height: 100%; display: block" src="C:\Users\CDOG\Documents\proAula_2023_2\no-photo.jpg" width="" th:src="${pg.imagen}" alt="Error al mostrar la imagen">
+                                        <div class="card-md-3 ml-3 my-4" style="overflow: hidden; max-height: 100%">
+                                            <img class="img-fluid rounded-start" style="width: 180px; height: auto; display: block" width="" th:src="@{/assets/{filename}(filename=${pg.ruta_imagen})}" alt="Error al mostrar la imagen">
                                         </div>
                                         <div class="col-md-9">
                                             <div class="card-body">
@@ -61,20 +61,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </div>  
                         </div>
                         <div th:if="${#lists.isEmpty(productos)}">
-                            <small class='text-danger'>No se encontraron resultados</small>                        
-                            <h5 class="text-muted">
-                                    Si no existe el producto puedes crearlo desde cero : <a class="btn btn-link" th:href="@{/producto_global/registrar}">Crear nuevo producto</a>
-                            </h5>
-                            <form th:action="@{/producto_global/registrar}">
-                                <h5 class="text-muted">
-                                    Si no existe el producto puedes crearlo desde cero : <button type="submit" class="btn btn-link">Crear nuevo producto</button>
-                                </h5>
-                            </form>
-                        </div> 
+                            <small class='text-danger'>No se encontraron resultados</small>    
+                        </div>
+
                     </div>   
                 </div>
-                <br>
-                <!--</div>-->
             </div>
-    </body>
-</html>
+            <br>                     
+            <h5 class="text-muted">
+                Si no existe el producto puedes crearlo desde cero : <a class="btn btn-link" th:href="@{/producto_global/registrar}">Crear nuevo producto</a>
+            </h5>
+            <br>
+            </body>
+            </html>

@@ -5,7 +5,9 @@
 package co.unicolombo.edu.services;
 
 import co.unicolombo.edu.models.Producto;
+import co.unicolombo.edu.models.ProductoGlobal;
 import co.unicolombo.edu.repositories.ProductoRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +29,45 @@ public class ProductoServicioImpl implements ProductoServicio{
         }
         
     }
+
+    @Override
+    public Producto validar(Producto producto) throws Exception{
+
+        producto.setEstado(producto.getEstado().trim());
+        
+        
+        if (producto == null) {
+            throw new Exception("El producto no puede ser nulo");
+        } else if (exitsProductoGlobalInTienda(producto.getProductoGlobal(),
+                producto.getTienda().getNit())) {
+            throw new Exception("El producto ya existe en la tienda");
+        }             
+        return producto;
+    }
+
+    @Override
+    public Producto getById(Integer id) {
+        return this.repositorio.findById(id).get();
+    }
+
+    @Override
+    public boolean existsById(Integer id) {
+        return this.repositorio.existsById(id);
+    }
+
+    @Override
+    public boolean exitsProductoGlobalInTienda(ProductoGlobal productoGlobal, Integer nitTienda) {        
+        List<Producto> subProductos = productoGlobal.getSubProductos();
+        if(subProductos == null || subProductos.isEmpty()){
+            return false;
+        }
+        for(Producto p: subProductos){
+            if(p.getTienda().getNit() == nitTienda){
+                return true;
+            }
+        }        
+        return false;
+    }
+    
     
 }

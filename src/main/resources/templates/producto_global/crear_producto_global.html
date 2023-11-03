@@ -14,18 +14,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <header th:replace="~{plantillas/tiendaPartes :: cabecera}"></header>
         <div class="container">
             <h1 class="text-center">Crear nuevo Producto</h1><br>
+            <div th:if="${exception} != null" class=" pt-4 pb-4 text-center">
+                <span th:text="${exception}" class="alert alert-warning  fw-bold fs-5"></span>
+            </div>
             <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
                 <div class="card-body">
                     <form th:action="@{/producto_global/agregar}" th:object="${productoGlobal}" enctype="multipart/form-data" method="POST">                        
 
                         <div class="form-group">
                             <label>Codigo : </label>
-                            <input type="text" name="codigo" pattern="[0-9]+" th:field="*{codigo}" maxlength="10" class="form-control" placeholder="Digite el codigo del producto: " required>
+                            <input type="text" name="codigo" title="Solo se permiten numeros, min 3" pattern="[0-9]{3,10}" th:field="*{codigo}" maxlength="10" class="form-control" placeholder="Digite el codigo del producto: " required>
+                            <div th:if="${#fields.hasErrors('codigo')}" class="p-1">
+                                <span class="text-danger" th:errors="*{codigo}"></span>
+                            </div>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Nombre : </label>
                             <input type="text" name="nombre" maxlength="45" th:field="*{nombre}" class="form-control" placeholder="Digite el nombre del producto : " required>
+                            <div th:if="${#fields.hasErrors('nombre')}" class="p-1">
+                                <span class="text-danger" th:errors="*{nombre}"></span>
+                            </div>
                         </div>
                         <br>
                         <div class="form-group">
@@ -36,16 +45,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <option th:value="${c.id}" th:text="${c.nombre}"></option> 
                                 </div>
                             </select>
+                            <div th:if="${#fields.hasErrors('categoria')}" class="p-1">
+                                <span class="text-danger" th:errors="*{categoria}"></span>
+                            </div>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Descripcion : </label>
                             <input type="text" name="descripcion" maxlength="200" th:field="*{descripcion}" class="form-control" placeholder="Digite la Descripcion del producto : " required >
+                            <div th:if="${#fields.hasErrors('descripcion')}" class="p-1">
+                                <span class="text-danger" th:errors="*{descripcion}"></span>
+                            </div>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Imagen : </label>
                             <input type="file" class="form-control-file" id="imagen" name="imagen"/>
+                            <div th:if="${#fields.hasErrors('imagen')}" class="p-1">
+                                <span class="text-danger" th:errors="*{imagen}"></span>
+                            </div>
                         </div>                           
                 </div>   
                 <br>
@@ -55,5 +73,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </form>
             </div>
         </div>        
-</body>
+    </body>
 </html>
