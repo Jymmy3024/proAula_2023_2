@@ -1,14 +1,10 @@
 package co.unicolombo.edu.models;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -22,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Tienda implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -34,7 +31,7 @@ public class Tienda implements Serializable{
     @Column(name = "nombre", nullable = false, length = 45)
     @NotNull
     private String nombre;
-    @Column(name = "ruta_imagen", nullable = true, length = 200)
+    @Column(name = "ruta_imagen", nullable = true, length = 200)   
     private String ruta_imagen;
     @Column(name = "tipo", nullable = true, length = 15)
     @NotEmpty

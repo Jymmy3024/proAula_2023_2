@@ -31,7 +31,7 @@ public class TiendaServicioImp implements ITiendaServicio{
     @Override
     public void agregarTienda(Tienda tienda) throws Exception {
         if(tiendaRepo.existsById(tienda.getNit())){
-            throw new Exception("La Tienda con el NIT = " + tienda.getNit() + ", ya existe.");        
+            throw new Exception("La Tienda con el codigo = " + tienda.getNit()+ ", ya existe.");        
         }else{
             tiendaRepo.save(tienda);
         }
@@ -91,6 +91,11 @@ public class TiendaServicioImp implements ITiendaServicio{
     public boolean existeTienda(Tienda tienda){
         boolean tExist = tiendaRepo.existsById(tienda.getNit());
             return tExist;        
+    }
+    
+    @Override
+    public Tienda obtenerPorNit(Integer nit){
+        return this.tiendaRepo.findById(nit).get();
     }
     
 }
