@@ -9,6 +9,8 @@ import co.unicolombo.edu.services.ProductoServicio;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +51,7 @@ public class ProductoController {
         /**
          * ***********LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION*
          */
-        Tienda t = tServicio.obtenerPorNit(888);
+        Tienda t = tServicio.obtenerPorNit(1000);
         Producto p = new Producto();
         p.setProductoGlobal(pgServicio.getByCodigo(codigoPg));
         p.setTienda(t);
@@ -63,29 +65,33 @@ public class ProductoController {
     @PostMapping("productos/agregar")
     public ModelAndView guardarProducto(@Validated Producto producto, BindingResult result, Model modelo, HttpSession sesion){
         if(result.hasErrors()){            
-            System.out.println(result.getFieldError());
-            System.out.println("\n\n\n----------------------------------TIENE ERRORES\n\n\n");
                 return new ModelAndView("producto/registrar_producto")
                 .addObject("producto", producto);
-        }
-        
-        System.out.println("AQUIIII");        
+        }      
         try {
-            /*            System.out.println(producto);
-            System.out.println(productoGlobal);
-            productoGlobal = pgServicio.getByCodigo(productoGlobal.getCodigo());
+            //Recuperamos la tienda y el producto global
+            Tienda tienda = tServicio.obtenerPorNit(producto.getTienda().getNit());
+            ProductoGlobal productoGlobal = pgServicio.getByCodigo(producto.getProductoGlobal().getCodigo());
+            
+            //Los volvemos a asignar a el producto ya encontrado
+            producto.setTienda(tienda);
             producto.setProductoGlobal(productoGlobal);
-            producto.setTienda((Tienda) sesion.getAttribute("tienda"));
-            System.out.println(producto);*/
-
-            //guardamos el producto
+            //validamos el producto
             producto = pServicio.validar(producto);
+            //guardamos el producto
             pServicio.guardarProducto(producto);
+            
             return this.showFormAddProducts(null);
         } catch (Exception e) {            
             return new ModelAndView("producto/registrar_producto")
                     .addObject("exception", e.getMessage());
         }
         
+    }
+    
+    @PostMapping("inicio/listar/productos")
+    public ModelAndView listarProductos(@RequestParam(name = "nit", required = false) Integer nit,Pageable pageable){
+        System.out.println("El nit es: " +nit);
+        return new ModelAndView("listar_productos");
     }
 }    

@@ -2,12 +2,15 @@ package co.unicolombo.edu.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +39,8 @@ public class Tienda implements Serializable{
     @Column(name = "tipo", nullable = true, length = 15)
     @NotEmpty
     private String tipo;
-    
     @Transient
     private MultipartFile imagen;
+    @OneToMany(mappedBy = "tienda", fetch = FetchType.LAZY)
+    private List<Producto> productos; 
 }

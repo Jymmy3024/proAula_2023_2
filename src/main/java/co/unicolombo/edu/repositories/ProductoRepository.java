@@ -5,6 +5,8 @@
 package co.unicolombo.edu.repositories;
 
 import co.unicolombo.edu.models.Producto;
+import co.unicolombo.edu.models.Tienda;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,7 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author CDOG
  */
 public interface ProductoRepository extends JpaRepository<Producto, Integer>{
-    
-    
-    
+    Page<Producto> findAllByTienda(Tienda tienda);
 }

@@ -12,9 +12,9 @@
         <header th:fragment="cabecera">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
-                    <a class="navbar-brand fs-4 fw-bold" href="/inicio/" target="contenido">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3388/3388845.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                        Tuti</a>                    
+                    <a class="navbar-brand fs-4 fw-bold" th:href="@{/inicio/}" target="contenido">
+                        <img th:src="@{/assets/{filename}(filename=logo.png)}" alt="Logo" width="55" height="35" class="d-inline-block align-text-top">
+                        TUTI</a>                 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -23,7 +23,7 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="#" target="contenido">
                                     <img src="https://cdn-icons-png.flaticon.com/512/4064/4064227.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                                    Productos</a>
+                                    List Productos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="#" target="contenido">
@@ -38,8 +38,8 @@
                                     <a class="btn btn-primary" href="#" target="contenido">Login</a>
                                 </li>
                             </ul>
-                            <form class="d-flex" role="search" th:action="@{/}" method="get">
-                                <input class="form-control me-2" type="search" placeholder="Buscar Productos" aria-label="Search">
+                            <form class="d-flex" th:action="@{/inicio/buscar-tiendas}" role="search" method="POST">
+                                <input class="form-control me-2" name="nombre" type="search" placeholder="Buscar Tienda(s)" aria-label="Search">
                                 <button class="btn btn-success" type="submit">Buscar</button>
                             </form>
                         </div>
