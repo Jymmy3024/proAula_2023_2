@@ -9,12 +9,15 @@ import co.unicolombo.edu.services.ProductoServicio;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,7 +52,7 @@ public class ProductoController {
         /**
          * ***********LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION*
          */
-        Tienda t = tServicio.obtenerPorNit(888);
+        Tienda t = tServicio.obtenerPorNit(1000);
         Producto p = new Producto();
         p.setProductoGlobal(pgServicio.getByCodigo(codigoPg));
         p.setTienda(t);
@@ -63,29 +66,41 @@ public class ProductoController {
     @PostMapping("productos/agregar")
     public ModelAndView guardarProducto(@Validated Producto producto, BindingResult result, Model modelo, HttpSession sesion){
         if(result.hasErrors()){            
-            System.out.println(result.getFieldError());
-            System.out.println("\n\n\n----------------------------------TIENE ERRORES\n\n\n");
                 return new ModelAndView("producto/registrar_producto")
                 .addObject("producto", producto);
-        }
-        
-        System.out.println("AQUIIII");        
+        }      
         try {
-            /*            System.out.println(producto);
-            System.out.println(productoGlobal);
-            productoGlobal = pgServicio.getByCodigo(productoGlobal.getCodigo());
+            //Recuperamos la tienda y el producto global
+            Tienda tienda = tServicio.obtenerPorNit(producto.getTienda().getNit());
+            ProductoGlobal productoGlobal = pgServicio.getByCodigo(producto.getProductoGlobal().getCodigo());
+            
+            //Los volvemos a asignar a el producto ya encontrado
+            producto.setTienda(tienda);
             producto.setProductoGlobal(productoGlobal);
-            producto.setTienda((Tienda) sesion.getAttribute("tienda"));
-            System.out.println(producto);*/
-
-            //guardamos el producto
+            //validamos el producto
             producto = pServicio.validar(producto);
+            //guardamos el producto
             pServicio.guardarProducto(producto);
+            
             return this.showFormAddProducts(null);
         } catch (Exception e) {            
             return new ModelAndView("producto/registrar_producto")
                     .addObject("exception", e.getMessage());
         }
         
+    }
+    
+    @GetMapping("inicio/listar/productos/{nit}")
+    public ModelAndView listarProductos(@PathVariable("nit") Integer nit,Pageable pageable){
+        try{
+            Tienda t = tServicio.obtenerPorNit(nit);
+            System.out.println(t.getNombre());
+            Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
+            return new ModelAndView("listar_productos")
+                        .addObject("listPro", listPro);
+        }catch(Exception e){
+            return new ModelAndView("listar_productos")
+                    .addObject("msjNP", e.getMessage());
+        }
     }
 }    

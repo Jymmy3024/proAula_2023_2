@@ -64,7 +64,7 @@ public class ProductoGlobalController {
                 pgservice.save(productoGlobal);
                 
                 Producto producto = new Producto();
-                Tienda t = tServicio.obtenerPorNit(445);
+                Tienda t = tServicio.obtenerPorNit(1000);
                 producto.setTienda(t);
                 producto.setProductoGlobal(productoGlobal);
 

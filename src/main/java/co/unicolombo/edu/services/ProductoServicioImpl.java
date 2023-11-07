@@ -6,9 +6,12 @@ package co.unicolombo.edu.services;
 
 import co.unicolombo.edu.models.Producto;
 import co.unicolombo.edu.models.ProductoGlobal;
+import co.unicolombo.edu.models.Tienda;
 import co.unicolombo.edu.repositories.ProductoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -69,5 +72,14 @@ public class ProductoServicioImpl implements ProductoServicio{
         return false;
     }
     
+    @Override
+    public Page<Producto> listAllByTienda(Tienda tienda, Pageable pageable) throws Exception{
+        Page<Producto> productos = repositorio.findAllByTienda(tienda, pageable);
+        if(productos == null || productos.isEmpty()){
+            throw new Exception("La tienda: " + tienda.getNombre() + ", no ha registrado productos aun.");
+        }else{
+            return productos;
+        }
+    }
     
 }

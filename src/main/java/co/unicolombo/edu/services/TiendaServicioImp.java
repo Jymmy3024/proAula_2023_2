@@ -19,7 +19,7 @@ public class TiendaServicioImp implements ITiendaServicio{
     @Autowired
     private TiendaRepository tiendaRepo;
     @Override
-    public Page<Tienda> listarTiendas(@PageableDefault(sort = "tipo", size = 8) Pageable pageable) throws Exception {
+    public Page<Tienda> listarTiendas(@PageableDefault(sort = "nombre", size = 8) Pageable pageable) throws Exception {
         Page<Tienda> listTienda = tiendaRepo.findAll(pageable);
         if(listTienda == null && listTienda.isEmpty()){
             throw new Exception("La lista de tiendas esta vacia.");
@@ -75,7 +75,18 @@ public class TiendaServicioImp implements ITiendaServicio{
             return listTi;
         }
     }
-
+    
+    @Override
+    public List<Tienda> listarPorCategoria(String tipo) throws Exception{
+        List<Tienda> listCT = tiendaRepo.findByTipo(tipo);
+        if(listCT == null || listCT.isEmpty()){
+            throw new Exception("No hay registros de tiendas con la categoria: " + tipo);
+        }else{
+            return listCT;
+        }
+        
+    }
+    
     @Override
     public boolean existeTienda(Tienda tienda){
         boolean tExist = tiendaRepo.existsById(tienda.getNit());

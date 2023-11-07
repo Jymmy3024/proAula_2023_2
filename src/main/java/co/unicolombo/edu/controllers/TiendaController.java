@@ -3,14 +3,17 @@ package co.unicolombo.edu.controllers;
 import co.unicolombo.edu.models.Tienda;
 import co.unicolombo.edu.services.ITiendaServicio;
 import co.unicolombo.edu.services.storage.StorageServiceImp;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,11 +31,12 @@ public class TiendaController {
     private StorageServiceImp storageService;
 
     @GetMapping("inicio/")
-    public ModelAndView inicio(Pageable pageable) throws Exception {
+    public ModelAndView inicio(@PageableDefault(sort = "nombre", size = 8)Pageable pageable) throws Exception {
         try {
             Page<Tienda> tiendaList = tiendaCrud.listarTiendas(pageable);
-            return new ModelAndView("index")
+            return new ModelAndView("index")   
                     .addObject("tiendaList", tiendaList);
+                    
         } catch (Exception e) {
             String msjIni = e.getMessage();
             return new ModelAndView("index")
@@ -41,6 +45,17 @@ public class TiendaController {
 
     }
 
+    @GetMapping("inicio/listarCategoria/{tipo}")
+    public ModelAndView listarByCategoria(@PathVariable("tipo") String tipo,Pageable pageable)throws Exception{
+        try{
+            List<Tienda> listTC = tiendaCrud.listarPorCategoria(tipo);
+            return new ModelAndView("index")
+                    .addObject("tiendaList", listTC);
+        }catch(Exception e){
+            return new ModelAndView("index")
+                    .addObject("msjIni", e.getMessage());
+        }
+    }
     @GetMapping("inicio/registrar-tienda")
     public ModelAndView registrar(Tienda tienda) {
         return new ModelAndView("tienda/registrarTienda")
@@ -79,5 +94,26 @@ public class TiendaController {
                     .addObject("tExist", tExist)
                     .addObject("msjTEx", "Error: " + e.getMessage());
         }
+    }
+    
+    @PostMapping("inicio/buscar-tiendas")
+    public ModelAndView buscarTiendas(String nombre, Pageable pageable) throws Exception{
+        Page<Tienda> listTNE = tiendaCrud.listarTiendas(pageable);
+        try{
+            if(nombre.isBlank() || nombre.isEmpty()){
+                return new ModelAndView("index")
+                        .addObject("msjBT", "El campo para buscar no debe estar vacio")
+                        .addObject("tiendaList", listTNE);
+            }else{
+            List<Tienda> listTBN = tiendaCrud.buscarTiendasPorNombre(nombre);
+            return new ModelAndView("index")
+                    .addObject("tiendaList", listTBN);
+            }
+        }catch(Exception e){
+            return new ModelAndView("index")
+                    .addObject("msjBT", e.getMessage())
+                    .addObject("tiendaList", listTNE);
+        }
+        
     }
 }
