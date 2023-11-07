@@ -15,19 +15,16 @@
         </div>
         <div class="container-fluid">
             <div th:if="${tiendaList != null && !tiendaList.empty}" class="row row-cols-sm-4">
-                <div class="col-sm-3 p-sm-2" th:each="t : ${tiendaList}">
-                    <form th:action="@{/inicio/listar/productos}" method="POST">
-                        <input type="hidden" name="nit" id="nit" th:value="${t.nit}">
-                        <button type="submit" class="btn btn-dark">
+                <div class="col-sm-3 p-sm-2 ps-sm-4" th:each="t : ${tiendaList}">
+                    <a th:href="@{/inicio/listar/productos/{nit}(nit=${t.nit})}" class="text-decoration-none">
                         <div class="card" style="width: 18rem;">
-                            <img th:src="@{/assets/{filename}(filename=${t.ruta_imagen})}" style=" height: 200px; width: 100%" class="card-img-top " th:alt="${t.ruta_imagen}"/>
-                            <div class="card-body text-start">
+                            <img th:src="@{/assets/{filename}(filename=${t.ruta_imagen})}" style=" height: 200px; width: 100%" class="card-img-top " th:alt="@{/nofoto/no-photo.jpg}"/>
+                            <div class="card-body">
                                 <h5 class="card-title" th:text="${t.nombre}"></h5>
                                 <p class="card-text" th:text="${t.descripcion}"></p>
                             </div>
                         </div>
-                        </button>
-                    </form>    
+                    </a>    
                 </div>
             </div>
         </div>

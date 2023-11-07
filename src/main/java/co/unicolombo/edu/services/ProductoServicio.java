@@ -3,7 +3,9 @@ package co.unicolombo.edu.services;
 
 import co.unicolombo.edu.models.Producto;
 import co.unicolombo.edu.models.ProductoGlobal;
-import org.springframework.stereotype.Service;
+import co.unicolombo.edu.models.Tienda;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -23,4 +25,5 @@ public interface ProductoServicio {
     
     public boolean exitsProductoGlobalInTienda(ProductoGlobal productoGlobal, Integer nitTienda);
     
+    public Page<Producto> listAllByTienda(Tienda tienda, Pageable pageable) throws Exception;
 }

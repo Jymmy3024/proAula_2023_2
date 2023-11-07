@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -89,9 +90,17 @@ public class ProductoController {
         
     }
     
-    @PostMapping("inicio/listar/productos")
-    public ModelAndView listarProductos(@RequestParam(name = "nit", required = false) Integer nit,Pageable pageable){
-        System.out.println("El nit es: " +nit);
-        return new ModelAndView("listar_productos");
+    @GetMapping("inicio/listar/productos/{nit}")
+    public ModelAndView listarProductos(@PathVariable("nit") Integer nit,Pageable pageable){
+        try{
+            Tienda t = tServicio.obtenerPorNit(nit);
+            System.out.println(t.getNombre());
+            Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
+            return new ModelAndView("listar_productos")
+                        .addObject("listPro", listPro);
+        }catch(Exception e){
+            return new ModelAndView("listar_productos")
+                    .addObject("msjNP", e.getMessage());
+        }
     }
 }    
