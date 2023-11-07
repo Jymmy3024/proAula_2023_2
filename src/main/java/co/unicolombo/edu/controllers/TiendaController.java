@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -30,7 +31,7 @@ public class TiendaController {
     private StorageServiceImp storageService;
 
     @GetMapping("inicio/")
-    public ModelAndView inicio(Pageable pageable) throws Exception {
+    public ModelAndView inicio(@PageableDefault(sort = "nombre", size = 8)Pageable pageable) throws Exception {
         try {
             Page<Tienda> tiendaList = tiendaCrud.listarTiendas(pageable);
             return new ModelAndView("index")   

@@ -15,7 +15,7 @@
         </div>
         <div class="container-fluid">
             <div th:if="${tiendaList != null && !tiendaList.empty}" class="row row-cols-sm-4">
-                <div class="col-sm-3 p-sm-2 ps-sm-4" th:each="t : ${tiendaList}">
+                <div class="col-sm-auto col-md-auto col-lg-auto p-sm-2 ps-sm-4" th:each="t : ${tiendaList}">
                     <a th:href="@{/inicio/listar/productos/{nit}(nit=${t.nit})}" class="text-decoration-none">
                         <div class="card" style="width: 18rem;">
                             <img th:src="@{/assets/{filename}(filename=${t.ruta_imagen})}" style=" height: 200px; width: 100%" class="card-img-top " th:alt="@{/nofoto/no-photo.jpg}"/>
@@ -26,8 +26,16 @@
                         </div>
                     </a>    
                 </div>
+                
             </div>
+            
         </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination mb-o">
+                        <li class="page-item">1</li>
+                    </ul>
+                </nav>
+            
         <div th:unless="${tiendaList != null && !tiendaList.empty}" class="p-4 text-center">
             <span class="alert alert-danger fw-bold fs-3 " th:text="${msjIni}"></span>
         </div>
