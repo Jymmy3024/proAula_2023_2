@@ -5,14 +5,21 @@
 package co.unicolombo.edu.repositories;
 
 import co.unicolombo.edu.models.Producto;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
  * @author CDOG
  */
-public interface ProductoRepository extends JpaRepository<Producto, Integer>{
-    
-    
-    
+public interface ProductoRepository extends JpaRepository<Producto, Integer> {
+
+    @Query(value = "SELECT * FROM productos p WHERE p.tienda = ?1 "
+            + "AND p.producto_global IN "
+            + "(SELECT codigo FROM productos_global pg WHERE "
+            + "CONCAT(pg.nombre, pg.descripcion, pg.categoria, pg.codigo)"
+            + "LIKE %?2%)",
+            nativeQuery = true)
+    public List<Producto> findProductoByTienda(Integer tienda, String busqueda);
 }

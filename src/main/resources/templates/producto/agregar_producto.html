@@ -19,7 +19,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <form th:action="@{/productos/agregar}" method="get">
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="busqueda" th:value="${busqueda}" placeholder="Busque el Producto que desea agregar" aria-describedby="button-addon2">
+                    <input type="search" aria-label="search " class="form-control" name="busqueda" th:value="${busqueda}" placeholder="Busque el Producto que desea agregar" aria-describedby="button-addon2">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-info" id="button-addon2">Buscar</button>
                     </div>

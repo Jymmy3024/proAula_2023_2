@@ -27,11 +27,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductoController {
 
     @Autowired
-    private ProductoGlobalServicio pgServicio;//REPOSITORIO DEL PRODUCTO GLOBAL
+    private ProductoGlobalServicio pgServicio;//SERVICIO DEL PRODUCTO GLOBAL
 
     @Autowired
-    private ProductoServicio pServicio;//REPOSITORIO DEL PRODUCTO DE LA TIENDA
-    
+    private ProductoServicio pServicio;//SERVICIO DEL PRODUCTO DE LA TIENDA
+
     @Autowired
     private ITiendaServicio tServicio;  //SERVICIO DE LAS TIENDAS    
 
@@ -42,50 +42,76 @@ public class ProductoController {
                 .addObject("productos", resultados);
     }
 
-    
     @PostMapping("productos/registrar/")
     public ModelAndView showProductRegistrationForm(@RequestParam("codProdGlobal") Integer codigoPg, Model modelo, HttpSession sesion) {
         //le pasamos la tienda
         /**
          * ***********LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION*
          */
-        Tienda t = tServicio.obtenerPorNit(888);
+        Tienda t = tServicio.obtenerPorNit(4112);
         Producto p = new Producto();
         p.setProductoGlobal(pgServicio.getByCodigo(codigoPg));
         p.setTienda(t);
-                
+
         return new ModelAndView("producto/registrar_producto")
-                //.addObject("productoGlobal", pgServicio.getByCodigo(codigoPg))
-                //.addObject("tienda", t)
                 .addObject("producto", p);
     }
 
     @PostMapping("productos/agregar")
-    public ModelAndView guardarProducto(@Validated Producto producto, BindingResult result, Model modelo, HttpSession sesion){
-        if(result.hasErrors()){            
-            System.out.println(result.getFieldError());
-            System.out.println("\n\n\n----------------------------------TIENE ERRORES\n\n\n");
-                return new ModelAndView("producto/registrar_producto")
-                .addObject("producto", producto);
+    public ModelAndView guardarProducto(@Validated Producto producto, BindingResult result, Model modelo, HttpSession sesion) {
+        if (result.hasErrors()) {
+            return new ModelAndView("producto/registrar_producto")
+                    .addObject("producto", producto);
         }
-        
-        System.out.println("AQUIIII");        
         try {
-            /*            System.out.println(producto);
-            System.out.println(productoGlobal);
-            productoGlobal = pgServicio.getByCodigo(productoGlobal.getCodigo());
-            producto.setProductoGlobal(productoGlobal);
-            producto.setTienda((Tienda) sesion.getAttribute("tienda"));
-            System.out.println(producto);*/
 
-            //guardamos el producto
+            //Recuperamos la tienda y el producto global
+            Tienda tienda = tServicio.obtenerPorNit(producto.getTienda().getNit());
+            ProductoGlobal productoGlobal = pgServicio.getByCodigo(producto.getProductoGlobal().getCodigo());
+
+            //Los volvemos a asignar a el producto ya recuperados
+            producto.setTienda(tienda);
+            producto.setProductoGlobal(productoGlobal);
+
+            //Validamos el producto
             producto = pServicio.validar(producto);
+
+            //finalmente lo guardamos
             pServicio.guardarProducto(producto);
+
             return this.showFormAddProducts(null);
-        } catch (Exception e) {            
+        } catch (Exception e) {
             return new ModelAndView("producto/registrar_producto")
                     .addObject("exception", e.getMessage());
         }
-        
     }
-}    
+
+    @GetMapping("productos/resultados")
+    public ModelAndView showResultsPage(@Param("busqueda") String busqueda) {
+        try {
+            ModelAndView modelo = new ModelAndView("busqueda");
+            
+            if (busqueda != null && !busqueda.isEmpty() && !busqueda.isBlank()) {
+                List<Tienda> tiendas = tServicio.buscarTiendasPorNombre(busqueda);
+                List<Tienda> productosInTiendas = tServicio.buscarProductosByTienda(busqueda);
+
+                if (tiendas != null && !tiendas.isEmpty()) {
+                    modelo.addObject("tiendas", tiendas);
+                } else {
+                    tiendas.addAll(productosInTiendas);
+                    modelo.addObject("tiendas", tiendas);
+                }
+
+                if (productosInTiendas != null && !productosInTiendas.isEmpty()) {
+                    modelo.addObject("productosInTienda", productosInTiendas);
+                }
+            }
+            
+            return modelo.addObject("busqueda", busqueda);
+
+        } catch (Exception e) {
+            return new ModelAndView("busqueda")
+                    .addObject("exception", e);
+        }
+    }
+}

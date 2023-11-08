@@ -27,7 +27,7 @@ public class TiendaController {
     @Autowired
     private StorageServiceImp storageService;
 
-    @GetMapping("inicio/")
+    @GetMapping(value = {"/","inicio"})
     public ModelAndView inicio(Pageable pageable) throws Exception {
         try {
             Page<Tienda> tiendaList = tiendaCrud.listarTiendas(pageable);
@@ -63,18 +63,13 @@ public class TiendaController {
             tienda.setRuta_imagen(ruta_imagen);
             }
             boolean tNExist = !tExist;
-//            model.addAttribute("tNExist", tNExist);
             tiendaCrud.agregarTienda(tienda);
             String msjTR = "Tienda Registrada con exito,enviaremos un correo para seguir con el proceso";
-            //model.addAttribute("msjTR", msjTR);
             return new ModelAndView("tienda/registrarTienda")
                     .addObject("tNExist", tNExist)
                     .addObject("msjTR", msjTR)
-                    .addObject("tienda", new Tienda());
-            
+                    .addObject("tienda", new Tienda());            
         } catch (Exception e) {
-//            model.addAttribute("tExist", tExist);
-//            model.addAttribute("msjTEx", "Error: " + e.getMessage());
             return new ModelAndView("tienda/registrarTienda")
                     .addObject("tExist", tExist)
                     .addObject("msjTEx", "Error: " + e.getMessage());

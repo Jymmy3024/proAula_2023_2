@@ -22,5 +22,7 @@ public interface ITiendaServicio {
     public boolean existeTienda(Tienda tienda);
 
     public Tienda obtenerPorNit(Integer nit);
+    
+    public List<Tienda> buscarProductosByTienda(String busqueda);
 
 }

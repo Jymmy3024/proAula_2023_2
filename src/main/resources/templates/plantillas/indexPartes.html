@@ -43,8 +43,8 @@
                                     <a class="btn btn-primary" href="#" target="contenido">Login</a>
                                 </li>
                             </ul>
-                            <form class="d-flex" role="search" th:action="@{/}" method="get">
-                                <input class="form-control me-2" type="search" placeholder="Buscar Tienda(s)" aria-label="Search">
+                            <form class="d-flex" role="search" th:action="@{/productos/resultados}" method="GET">
+                                <input class="form-control me-2" required type="search" th:name="busqueda" placeholder="Buscar Productos, Tiendas" aria-label="Search">
                                 <button class="btn btn-success" type="submit">Buscar</button>
                             </form>
                         </div>
