@@ -29,11 +29,15 @@
                 background-attachment: fixed;
             }
 
-            .container{
+            .body .container{
                 width: 100%;
                 align-items: center;
                 justify-content: center;
+                margin-bottom: 5em;
+                margin-right: 2em;
+                margin-left: 2em;
             }
+
             .section{
                 width: 100%;
                 height: 100%;
@@ -42,30 +46,33 @@
 
             .swiper {
                 width: 100%;
-                height: 30%;
+                height: 400px;
+                max-height: 340px;
             }
+            
 
-
-            .swiper swiper-slide, h5{
-                text-align: center;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            .swiper .swiper-slide{
+                width: 100%;
+                height: 100%;
+                max-height: 340px;
             }
 
             .swiper-slide .card{
-                border-radius: 2em;
-                overflow: hidden;
-                margin: 4px;
-                box-shadow: 0 0 10px rgba(196, 196, 196, 0.1);
-            }
-            .card .card-image {
-                display: flow;
-                width: 100%;
-                height: 150px;
-                object-fit: cover;
+                height: 100%;
+                width: 200px;
             }
 
+            .card-body{  
+                margin: 0;
+            }
+            
+            .card-description{
+                align-items: center;                                                   
+                margin: 0.05em;
+                margin-bottom: 0.5em;
+                overflow: visible;
+            }
+            
             .card-title{
                 text-align: center;
                 color: dodgerblue;
@@ -73,8 +80,45 @@
             }
 
             .swiper-title{
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 text-align: left;
+                box-sizing: border-box;
+                box-shadow: 0 0 20px rgba(196, 196, 196, 0.5);
             }
+
+
+            /*SWIPER SLIDE DE TIENDAS*/
+            .swiper#swiper-tiendas{
+                width: 100%;
+                height: 30%;
+                max-height: 200px;
+            }
+
+            .swiper#swiper-tiendas .swiper-slide#swiper-slide-tiendas{
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+
+            .swiper-slide#swiper-slide-tiendas .card#card-tiendas{
+                height: 200px;
+                width: 100%;
+                border-radius: 2em;
+                overflow: hidden;
+                margin: 4px;
+                box-shadow: 0 0 10px rgba(196, 196, 196, 0.1);
+            }
+            .card#card-tiendas .card-image#card-image-tiendas {
+                display: flow;
+                width: 100%;    
+                height: 155px;
+                object-fit: cover;
+            }
+            
+            
 
         </style>
     </head>
@@ -92,16 +136,16 @@
                 <span class="alert alert-danger" th:text="${exception}"></span>
             </div>
             <div th:if='${tiendas != null &&  !tiendas.empty}'>
-                <h4 class="swiper-title">Tiendas</h4>
-                <section class="swiper mySwiper">                
-                    <div class="wrapper swiper-wrapper" th:if="${tiendas!= null && !tiendas.empty}">
-                        <div class="item swiper-slide" th:each="t : ${tiendas}">
+                <h4 class="swiper-title" id="swiper-title-tiendas">Tiendas</h4>
+                <section class="swiper mySwiper" id="swiper-tiendas">                
+                    <div class="wrapper swiper-wrapper" id="swiper-wrapper-tiendas" th:if="${tiendas!= null && !tiendas.empty}">
+                        <div class="item swiper-slide" id="swiper-slide-tiendas" th:each="t : ${tiendas}">
                             <a th:href="@{#}" class="text-decoration-none">
-                                <div class="card">                                                                
-                                    <div class="card-title">
+                                <div class="card" id="card-tiendas">                                                                
+                                    <div class="card-title" id="card-title-tiendas">
                                         <h5 th:text="${t.nombre}"></h5>
                                     </div>
-                                    <img class="card-image" th:src="@{/assets/{filename}(filename=${t.ruta_imagen})}" th:alt="@{${t.ruta_imagen}}"/>
+                                    <img class="card-image" id="card-image-tiendas" th:src="@{/assets/{filename}(filename=${t.ruta_imagen})}" th:alt="@{${t.ruta_imagen}}"/>
                                 </div>
                             </a>     
                         </div>                    
@@ -111,10 +155,37 @@
                     <div class="swiper-pagination"></div>
                 </section>    
             </div>
-            <br>                       
+            <br>              
+            <div th:if='${productosInTienda != null &&  !productosInTienda.empty}' th:each="t : ${productosInTienda}">
+                <h4 class="swiper-title" th:text="${t.nombre}"></h4>
+                <section class="swiper mySwiper" >                
+                    <div class="wrapper swiper-wrapper">
+                        <div class="item swiper-slide" th:each="p : ${t.listaProductos}">
+                            <div class="card">
+                                <img class="card-img" th:src="@{/assets/{filename}(filename=${p.productoGlobal.ruta_imagen})}"/>
+                                <div class="card-body">
+                                    <p class="card-title fw-bold fs-6" th:text="${p.productoGlobal.nombre}"></p>
+                                    <p class="card-text" th:text="'Precio: '+'$'+${p.precioUnitario}"></p>
+                                </div>
+                                <div class="d-flex justify-content-between ps-sm-3 pb-sm-2">
+                                    <form th:action="@{/}" method="POST">
+                                        <input type="hidden" name="id" id="id" th:value="${p.id}" />
+                                        <input type="submit" class="btn btn-secondary btn-sm" 
+                                               style="--bs-btn-font-size: .75rem;" name="Detalles" value="Detalles">
+                                        <input type="submit" class="btn btn-success btn-sm" 
+                                               style="--bs-btn-font-size: .75rem;" name="Comprar" value="Agregar al Carrito">
+                                    </form>
+                                </div>
+                            </div>  
+                        </div>                    
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </section>    
+            </div>            
 
-
-            <div th:if="${productosInTienda == NULL OR productosInTienda.empty}">
+            <div th:if="${productosInTienda == NULL AND tiendas == NULL}">
                 <div class="card align-items-center"><h4 class='text-danger'>No se encontraron resultados</h4></div>
             </div>
         </div>
@@ -155,9 +226,11 @@
                         spaceBetween: 50,
                     },
                 },
-                mousewheel: true,
+                mousewheel: false,
                 keyboard: true,
             });
         </script>
+        <br>
+        <br>
     </body>
 </html>

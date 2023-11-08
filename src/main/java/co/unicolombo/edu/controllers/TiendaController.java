@@ -31,7 +31,7 @@ public class TiendaController {
     private StorageServiceImp storageService;
 
 
-    @GetMapping("inicio/")
+    @GetMapping(value = {"inicio", "/", ""})
     public ModelAndView inicio(@PageableDefault(sort = "nombre", size = 8)Pageable pageable) throws Exception {
         try {
             Page<Tienda> tiendaList = tiendaCrud.listarTiendas(pageable);
@@ -92,7 +92,7 @@ public class TiendaController {
         }
     }
     
-    @PostMapping("inicio/buscar-tiendas")
+   /* @PostMapping("inicio/buscar-tiendas")
     public ModelAndView buscarTiendas(String nombre, Pageable pageable) throws Exception{
         Page<Tienda> listTNE = tiendaCrud.listarTiendas(pageable);
         try{
@@ -111,5 +111,5 @@ public class TiendaController {
                     .addObject("tiendaList", listTNE);
         }
         
-    }
+    }*/
 }

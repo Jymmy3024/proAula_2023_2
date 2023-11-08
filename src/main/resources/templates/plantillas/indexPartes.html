@@ -53,8 +53,8 @@
                                     <a class="btn btn-primary" href="#" target="contenido">Login</a>
                                 </li>
                             </ul>
-                            <form class="d-flex" th:action="@{/inicio/buscar-tiendas}" role="search" method="POST">
-                                <input class="form-control me-2" name="nombre" type="search" placeholder="Buscar Tienda(s)" aria-label="Search">
+                            <form class="d-flex" th:action="@{/productos/resultados}" role="search" method="GET">
+                                <input class="form-control me-2" name="busqueda" type="search" placeholder="Buscar en Tuti" aria-label="Search">
                                     <button class="btn btn-success" type="submit">Buscar</button>
                             </form>
                         </div>
