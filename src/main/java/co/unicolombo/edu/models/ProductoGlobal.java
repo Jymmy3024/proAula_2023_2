@@ -31,6 +31,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Table(name = "productos_global", schema = "dbo")
 public class ProductoGlobal implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id     //Indicamos que es la llave primaria    
     @Positive(message = "El codigo debe ser mayor a 0")
     @Min(value = 100, message = "El codigo debe tener longitud minimo de 3")

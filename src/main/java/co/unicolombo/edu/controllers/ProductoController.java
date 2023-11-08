@@ -9,12 +9,15 @@ import co.unicolombo.edu.services.ProductoServicio;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -115,4 +118,18 @@ public class ProductoController {
                     .addObject("exception", e);
         }
     }
-}
+    
+    @GetMapping("inicio/listar/productos/{nit}")
+    public ModelAndView listarProductos(@PathVariable("nit") Integer nit,Pageable pageable){
+        try{
+            Tienda t = tServicio.obtenerPorNit(nit);
+            System.out.println(t.getNombre());
+            Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
+            return new ModelAndView("listar_productos")
+                        .addObject("listPro", listPro);
+        }catch(Exception e){
+            return new ModelAndView("listar_productos")
+                    .addObject("msjNP", e.getMessage());
+        }
+    }
+}    

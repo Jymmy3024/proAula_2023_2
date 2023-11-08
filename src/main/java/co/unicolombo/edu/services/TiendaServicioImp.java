@@ -26,7 +26,7 @@ public class TiendaServicioImp implements ITiendaServicio {
     private ProductoRepository productoRepo;
 
     @Override
-    public Page<Tienda> listarTiendas(@PageableDefault(sort = "tipo", size = 8) Pageable pageable) throws Exception {
+    public Page<Tienda> listarTiendas(@PageableDefault(sort = "nombre", size = 8) Pageable pageable) throws Exception {
         Page<Tienda> listTienda = tiendaRepo.findAll(pageable);
         if (listTienda == null && listTienda.isEmpty()) {
             throw new Exception("La lista de tiendas esta vacia.");
@@ -78,7 +78,18 @@ public class TiendaServicioImp implements ITiendaServicio {
         List<Tienda> listTi = tiendaRepo.findByNombreContaining(nombre);
         return listTi;
     }
-
+    
+    @Override
+    public List<Tienda> listarPorCategoria(String tipo) throws Exception{
+        List<Tienda> listCT = tiendaRepo.findByTipo(tipo);
+        if(listCT == null || listCT.isEmpty()){
+            throw new Exception("No hay registros de tiendas con la categoria: " + tipo);
+        }else{
+            return listCT;
+        }
+        
+    }
+    
     @Override
     public boolean existeTienda(Tienda tienda) {
         boolean tExist = tiendaRepo.existsById(tienda.getNit());
@@ -99,7 +110,7 @@ public class TiendaServicioImp implements ITiendaServicio {
         for (Tienda t : tiendas) {
             
             //Obtenemos la lista de productos encontrados en esa tienda correspondientes a la busqueda
-            List<Producto> productosTienda = productoRepo.findProductoByTienda(t.getNit(), busqueda);
+            List<Producto> productosTienda = productoRepo.findAllByTienda(t.getNit(), busqueda);
             
             //guardamos las tiendas en la que hayan resultados
             if (productosTienda != null && !productosTienda.isEmpty()) {                

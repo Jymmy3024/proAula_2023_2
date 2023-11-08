@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Tienda implements Serializable{
     
-    private static final long SerialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "nit", nullable = false)
     @NotNull
@@ -39,7 +39,6 @@ public class Tienda implements Serializable{
     @Column(name = "tipo", nullable = true, length = 15)
     @NotEmpty
     private String tipo;
-    
     @Transient
     private MultipartFile imagen;
     

@@ -6,6 +6,9 @@ package co.unicolombo.edu.repositories;
 
 import co.unicolombo.edu.models.Producto;
 import java.util.List;
+import co.unicolombo.edu.models.Tienda;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -21,5 +24,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
             + "CONCAT(pg.nombre, pg.descripcion, pg.codigo)"
             + "LIKE %?2%)",
             nativeQuery = true)
-    public List<Producto> findProductoByTienda(Integer tienda, String busqueda);
+    public List<Producto> findAllByTienda(Integer tienda, String busqueda);
+    
+    Page<Producto> findAllByTienda(Tienda tienda, Pageable pageable);
 }
