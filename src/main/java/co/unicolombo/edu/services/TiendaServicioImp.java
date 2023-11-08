@@ -4,6 +4,7 @@ import co.unicolombo.edu.models.Producto;
 import co.unicolombo.edu.models.Tienda;
 import co.unicolombo.edu.repositories.ProductoRepository;
 import co.unicolombo.edu.repositories.TiendaRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -91,19 +92,30 @@ public class TiendaServicioImp implements ITiendaServicio {
 
     @Override
     public List<Tienda> buscarProductosByTienda(String busqueda) {
-        List<Tienda> tiendas = this.tiendaRepo.findAll();
-
+        List<Tienda> tiendas = this.tiendaRepo.findAll(); //Obtenemos la lista de tiendas
+        List<Tienda> resultados = new ArrayList<Tienda>();
+        
+        //recorremos la lista de tiendas para ir haciendo la busqueda en sus productos
         for (Tienda t : tiendas) {
-            System.out.println(t.getNombre());
-            t.setListaProductos(productoRepo.findProductoByTienda(t.getNit(), busqueda));
-            if (t.getListaProductos() != null && !t.getListaProductos().isEmpty()) {
-                for (Producto p : t.getListaProductos()) {
-                    System.out.println(p);
-                }
-            }
-            System.out.println("\n\n\n");
+            
+            //Obtenemos la lista de productos encontrados en esa tienda correspondientes a la busqueda
+            List<Producto> productosTienda = productoRepo.findProductoByTienda(t.getNit(), busqueda);
+            
+            //guardamos las tiendas en la que hayan resultados
+            if (productosTienda != null && !productosTienda.isEmpty()) {                
+                t.setListaProductos(productosTienda);
+                resultados.add(t);
+            }            
         }
-        return tiendas;
+        
+        for(Tienda t:resultados){
+            System.out.println("TIENDA: "+t.getNombre());
+            for(Producto p : t.getListaProductos()){
+                System.out.println("P:"+p.getPrecioUnitario()+"PG:"+p.getProductoGlobal().getNombre());
+            }
+            System.out.println("\n\n");
+        }
+        return resultados;
     }
 
 }

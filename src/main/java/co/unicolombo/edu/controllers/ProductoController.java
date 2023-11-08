@@ -92,12 +92,13 @@ public class ProductoController {
             ModelAndView modelo = new ModelAndView("busqueda");
             
             if (busqueda != null && !busqueda.isEmpty() && !busqueda.isBlank()) {
-                List<Tienda> tiendas = tServicio.buscarTiendasPorNombre(busqueda);
-                List<Tienda> productosInTiendas = tServicio.buscarProductosByTienda(busqueda);
+                List<Tienda> tiendas = tServicio.buscarTiendasPorNombre(busqueda); //buscamos las tiendas con ese nombre
+                List<Tienda> productosInTiendas = tServicio.buscarProductosByTienda(busqueda); //Buscamos los productos encontrados en cada tienda
 
                 if (tiendas != null && !tiendas.isEmpty()) {
                     modelo.addObject("tiendas", tiendas);
                 } else {
+                    //si no hay tiendas con ese nombre colocamos aquellas donde hubo resultados
                     tiendas.addAll(productosInTiendas);
                     modelo.addObject("tiendas", tiendas);
                 }

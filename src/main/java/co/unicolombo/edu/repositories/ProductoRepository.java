@@ -18,7 +18,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     @Query(value = "SELECT * FROM productos p WHERE p.tienda = ?1 "
             + "AND p.producto_global IN "
             + "(SELECT codigo FROM productos_global pg WHERE "
-            + "CONCAT(pg.nombre, pg.descripcion, pg.categoria, pg.codigo)"
+            + "CONCAT(pg.nombre, pg.descripcion, pg.codigo)"
             + "LIKE %?2%)",
             nativeQuery = true)
     public List<Producto> findProductoByTienda(Integer tienda, String busqueda);
