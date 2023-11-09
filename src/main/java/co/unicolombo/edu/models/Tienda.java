@@ -41,6 +41,19 @@ public class Tienda implements Serializable{
     private String tipo;
     @Transient
     private MultipartFile imagen;
-    @OneToMany(mappedBy = "tienda", fetch = FetchType.LAZY)
-    private List<Producto> productos; 
+    
+    //Una Tienda tiene muchos Productos
+    @OneToMany(mappedBy = "tienda",fetch = FetchType.LAZY)
+    private List<Producto> listaProductos;  
+    
+    @Override
+    public String toString(){
+        return "Tienda{"
+                + " nit = "+this.nit
+                + ", descripcion = "+this.descripcion
+                + ", nombre = "+this.nombre
+                + ", ruta_imagen = "+this.ruta_imagen
+                + ", tipo = "+this.tipo
+                + "}";
+    }   
 }

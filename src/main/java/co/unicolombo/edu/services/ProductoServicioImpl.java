@@ -37,12 +37,14 @@ public class ProductoServicioImpl implements ProductoServicio{
     public Producto validar(Producto producto) throws Exception{
 
         producto.setEstado(producto.getEstado().trim());
+        System.out.println(producto);
         
-        
+        boolean existe= exitsProductoGlobalInTienda(producto.getProductoGlobal(),
+                producto.getTienda().getNit());
+               
         if (producto == null) {
             throw new Exception("El producto no puede ser nulo");
-        } else if (exitsProductoGlobalInTienda(producto.getProductoGlobal(),
-                producto.getTienda().getNit())) {
+        } else if (existe) {
             throw new Exception("El producto ya existe en la tienda");
         }             
         return producto;
@@ -61,25 +63,31 @@ public class ProductoServicioImpl implements ProductoServicio{
     @Override
     public boolean exitsProductoGlobalInTienda(ProductoGlobal productoGlobal, Integer nitTienda) {        
         List<Producto> subProductos = productoGlobal.getSubProductos();
+        
         if(subProductos == null || subProductos.isEmpty()){
+            System.out.println("LA LISTA ES NULA O VACIA");
             return false;
         }
         for(Producto p: subProductos){
             if(p.getTienda().getNit() == nitTienda){
+                System.out.println("ENCONTRADO");
                 return true;
-            }
+            } 
         }        
         return false;
     }
     
     @Override
     public Page<Producto> listAllByTienda(Tienda tienda, Pageable pageable) throws Exception{
-        Page<Producto> productos = repositorio.findAllByTienda(tienda, pageable);
-        if(productos == null || productos.isEmpty()){
-            throw new Exception("La tienda: " + tienda.getNombre() + ", no ha registrado productos aun.");
-        }else{
-            return productos;
-        }
+        Page<Producto> productos = repositorio.findAllByTienda(tienda, pageable);        
+            return productos;                   
     }
+
+    @Override
+    public List<Producto> searchInTienda(Integer tienda, String busqueda) {
+        return this.repositorio.buscarEnTienda(tienda, busqueda);
+    }
+    
+    
     
 }

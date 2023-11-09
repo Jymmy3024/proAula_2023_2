@@ -30,11 +30,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductoController {
 
     @Autowired
-    private ProductoGlobalServicio pgServicio;//REPOSITORIO DEL PRODUCTO GLOBAL
+    private ProductoGlobalServicio pgServicio;//SERVICIO DEL PRODUCTO GLOBAL
 
     @Autowired
-    private ProductoServicio pServicio;//REPOSITORIO DEL PRODUCTO DE LA TIENDA
-    
+    private ProductoServicio pServicio;//SERVICIO DEL PRODUCTO DE LA TIENDA
+
     @Autowired
     private ITiendaServicio tServicio;  //SERVICIO DE LAS TIENDAS    
 
@@ -45,59 +45,121 @@ public class ProductoController {
                 .addObject("productos", resultados);
     }
 
-    
     @PostMapping("productos/registrar/")
     public ModelAndView showProductRegistrationForm(@RequestParam("codProdGlobal") Integer codigoPg, Model modelo, HttpSession sesion) {
         //le pasamos la tienda
         /**
          * ***********LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION*
          */
-        Tienda t = tServicio.obtenerPorNit(1000);
+        Tienda t = tServicio.obtenerPorNit(4112);
         Producto p = new Producto();
         p.setProductoGlobal(pgServicio.getByCodigo(codigoPg));
         p.setTienda(t);
-                
+
         return new ModelAndView("producto/registrar_producto")
-                //.addObject("productoGlobal", pgServicio.getByCodigo(codigoPg))
-                //.addObject("tienda", t)
                 .addObject("producto", p);
     }
 
     @PostMapping("productos/agregar")
-    public ModelAndView guardarProducto(@Validated Producto producto, BindingResult result, Model modelo, HttpSession sesion){
-        if(result.hasErrors()){            
-                return new ModelAndView("producto/registrar_producto")
-                .addObject("producto", producto);
-        }      
+    public ModelAndView guardarProducto(@Validated Producto producto, BindingResult result, Model modelo, HttpSession sesion) {
+        if (result.hasErrors()) {
+            return new ModelAndView("producto/registrar_producto")
+                    .addObject("producto", producto);
+        }
         try {
+
             //Recuperamos la tienda y el producto global
             Tienda tienda = tServicio.obtenerPorNit(producto.getTienda().getNit());
             ProductoGlobal productoGlobal = pgServicio.getByCodigo(producto.getProductoGlobal().getCodigo());
-            
-            //Los volvemos a asignar a el producto ya encontrado
+
+            //Los volvemos a asignar a el producto ya recuperados
             producto.setTienda(tienda);
             producto.setProductoGlobal(productoGlobal);
-            //validamos el producto
+
+            //Validamos el producto
             producto = pServicio.validar(producto);
-            //guardamos el producto
+
+            //finalmente lo guardamos
             pServicio.guardarProducto(producto);
-            
+
             return this.showFormAddProducts(null);
-        } catch (Exception e) {            
+        } catch (Exception e) {
             return new ModelAndView("producto/registrar_producto")
                     .addObject("exception", e.getMessage());
         }
-        
     }
+
+    @GetMapping("productos/resultados")
+    public ModelAndView showResultsPage(@Param("busqueda") String busqueda) {
+        try {
+            ModelAndView modelo = new ModelAndView("busqueda");
+            
+            if (busqueda != null && !busqueda.isEmpty() && !busqueda.isBlank()) {
+                List<Tienda> tiendas = tServicio.buscarTiendasPorNombre(busqueda); //buscamos las tiendas con ese nombre
+                List<Tienda> productosInTiendas = tServicio.buscarProductosByTienda(busqueda); //Buscamos los productos encontrados en cada tienda
+
+                if (tiendas != null && !tiendas.isEmpty()) {
+                    modelo.addObject("tiendas", tiendas);
+                } else {
+                    //si no hay tiendas con ese nombre colocamos aquellas donde hubo resultados
+                    tiendas.addAll(productosInTiendas);
+                    modelo.addObject("tiendas", tiendas);
+                }
+
+                if (productosInTiendas != null && !productosInTiendas.isEmpty()) {
+                    modelo.addObject("productosInTienda", productosInTiendas);
+                }
+            }
+            
+            return modelo.addObject("busqueda", busqueda);
+
+        } catch (Exception e) {
+            return new ModelAndView("busqueda")
+                    .addObject("exception", e);
+        }
+    }
+    
+    @GetMapping("tiendas/resultados/{nit}")
+    public ModelAndView showResultsForShops(@PathVariable("nit") Integer nit, @Param("busqueda") String busqueda) {
+        try {
+                        
+            ModelAndView modelo = new ModelAndView("listar_productos.html");
+            Tienda tienda = tServicio.obtenerPorNit(nit);
+            modelo.addObject("tienda", tienda);
+            System.out.println(busqueda);
+            if (busqueda != null && !busqueda.isEmpty() && !busqueda.isBlank()) {
+                List<Producto> productos = pServicio.searchInTienda(nit, busqueda);
+                
+                if (productos != null && !productos.isEmpty()) {
+                    modelo.addObject("listPro", productos);
+                } else {
+                    //si no hay productos encontrados colocamos aquellas donde hubo resultados
+                    modelo.addObject("msjEmpty", "No se encontraron resultados para: '"+busqueda+"' en "+tienda.getNombre());
+                }
+            }
+            
+            return modelo.addObject("busqueda", busqueda);
+
+        } catch (Exception e) {
+            return new ModelAndView("busqueda")
+                    .addObject("exception", e);
+        }
+    }   
+            
     
     @GetMapping("inicio/listar/productos/{nit}")
     public ModelAndView listarProductos(@PathVariable("nit") Integer nit,Pageable pageable){
         try{
+            ModelAndView modelo = new ModelAndView("listar_productos");
             Tienda t = tServicio.obtenerPorNit(nit);
+            modelo.addObject("tienda", t);
             System.out.println(t.getNombre());
             Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
-            return new ModelAndView("listar_productos")
-                        .addObject("listPro", listPro);
+            if(listPro == null ||listPro.isEmpty() ){                
+                 modelo.addObject("msjEmpty","La tienda '"+t.getNombre()+"' no tiene productos.");
+            } 
+            return modelo.addObject("listPro", listPro);
+                        
         }catch(Exception e){
             return new ModelAndView("listar_productos")
                     .addObject("msjNP", e.getMessage());

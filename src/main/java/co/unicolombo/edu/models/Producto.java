@@ -59,10 +59,10 @@ public class Producto implements Serializable {
     private boolean disponibilidad = true;//valor por defecto true
 
     @NotNull
-    @Column(name = "precio_unitario", nullable = false, precision = 10, scale = 4)
+    @Column(name = "precio_unitario", nullable = false)
     private BigDecimal precioUnitario;
 
-    @Column(name = "pum", nullable = true, precision = 10, scale = 4)
+    @Column(name = "pum", nullable = true)
     private BigDecimal pum;
 
     @Column(name = "estado", nullable = true)
