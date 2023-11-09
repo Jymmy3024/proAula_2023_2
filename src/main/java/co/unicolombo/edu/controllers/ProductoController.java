@@ -119,14 +119,47 @@ public class ProductoController {
         }
     }
     
+    @GetMapping("tiendas/resultados/{nit}")
+    public ModelAndView showResultsForShops(@PathVariable("nit") Integer nit, @Param("busqueda") String busqueda) {
+        try {
+                        
+            ModelAndView modelo = new ModelAndView("listar_productos.html");
+            Tienda tienda = tServicio.obtenerPorNit(nit);
+            modelo.addObject("tienda", tienda);
+            System.out.println(busqueda);
+            if (busqueda != null && !busqueda.isEmpty() && !busqueda.isBlank()) {
+                List<Producto> productos = pServicio.searchInTienda(nit, busqueda);
+                
+                if (productos != null && !productos.isEmpty()) {
+                    modelo.addObject("listPro", productos);
+                } else {
+                    //si no hay productos encontrados colocamos aquellas donde hubo resultados
+                    modelo.addObject("msjEmpty", "No se encontraron resultados para: '"+busqueda+"' en "+tienda.getNombre());
+                }
+            }
+            
+            return modelo.addObject("busqueda", busqueda);
+
+        } catch (Exception e) {
+            return new ModelAndView("busqueda")
+                    .addObject("exception", e);
+        }
+    }   
+            
+    
     @GetMapping("inicio/listar/productos/{nit}")
     public ModelAndView listarProductos(@PathVariable("nit") Integer nit,Pageable pageable){
         try{
+            ModelAndView modelo = new ModelAndView("listar_productos");
             Tienda t = tServicio.obtenerPorNit(nit);
+            modelo.addObject("tienda", t);
             System.out.println(t.getNombre());
             Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
-            return new ModelAndView("listar_productos")
-                        .addObject("listPro", listPro);
+            if(listPro == null ||listPro.isEmpty() ){                
+                 modelo.addObject("msjEmpty","La tienda '"+t.getNombre()+"' no tiene productos.");
+            } 
+            return modelo.addObject("listPro", listPro);
+                        
         }catch(Exception e){
             return new ModelAndView("listar_productos")
                     .addObject("msjNP", e.getMessage());

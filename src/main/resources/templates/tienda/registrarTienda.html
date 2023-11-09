@@ -34,7 +34,7 @@
                                     <div class="container justify-content-center pb-3 col-md-6">
                                     <div class="card ">
                                     <div class="card-body">
-                                    <form th:action="@{/inicio/guardar-tienda}" method="POST" th:object="${tienda}" enctype="multipart/form-data">
+                                        <form th:action="@{/inicio/guardar-tienda}" method="POST" th:object="${tienda}" enctype="multipart/form-data">
                                         <div class="form-group pb-4">
                                             <label for="nit" class="fw-bold">Nit:</label>
                                             <input placeholder="Digite el NIT de la Tienda" type="number" class="form-control"  name="nit" id="nit" th:field="*{nit}"/>

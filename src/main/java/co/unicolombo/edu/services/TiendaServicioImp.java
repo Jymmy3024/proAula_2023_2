@@ -110,7 +110,7 @@ public class TiendaServicioImp implements ITiendaServicio {
         for (Tienda t : tiendas) {
             
             //Obtenemos la lista de productos encontrados en esa tienda correspondientes a la busqueda
-            List<Producto> productosTienda = productoRepo.findAllByTienda(t.getNit(), busqueda);
+            List<Producto> productosTienda = productoRepo.buscarEnTienda(t.getNit(), busqueda);
             
             //guardamos las tiendas en la que hayan resultados
             if (productosTienda != null && !productosTienda.isEmpty()) {                

@@ -24,7 +24,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
             + "CONCAT(pg.nombre, pg.descripcion, pg.codigo)"
             + "LIKE %?2%)",
             nativeQuery = true)
-    public List<Producto> findAllByTienda(Integer tienda, String busqueda);
+    public List<Producto> buscarEnTienda(Integer tienda, String busqueda);
     
     Page<Producto> findAllByTienda(Tienda tienda, Pageable pageable);
 }
