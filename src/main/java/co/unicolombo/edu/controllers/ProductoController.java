@@ -51,7 +51,7 @@ public class ProductoController {
         /**
          * ***********LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION*
          */
-        Tienda t = tServicio.obtenerPorNit(4112);
+        Tienda t = tServicio.obtenerPorNit(1001);
         Producto p = new Producto();
         p.setProductoGlobal(pgServicio.getByCodigo(codigoPg));
         p.setTienda(t);
