@@ -4,16 +4,20 @@ import co.unicolombo.edu.models.Tienda;
 import co.unicolombo.edu.repositories.TiendaRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author jimmy
  */
+@Service
 public class TiendaServicioImp implements ITiendaServicio{
     
     @Autowired
     private TiendaRepository tiendaRepo;
     @Override
+    @Transactional(readOnly = true)
     public List<Tienda> listarTiendas() throws Exception {
         List<Tienda> listTienda = tiendaRepo.findAll();
         if(listTienda == null && listTienda.isEmpty()){

@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public interface ITiendaServicio {
+    
     public List<Tienda> listarTiendas() throws Exception;
     
     public void agregarTienda(Tienda tienda) throws Exception;
