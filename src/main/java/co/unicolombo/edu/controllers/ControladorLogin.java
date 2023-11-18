@@ -30,7 +30,7 @@ public class ControladorLogin {
         this.clienterServicio = clienterServicio;
     }
     
-    @GetMapping("/")
+    @GetMapping("/cliente/login")
     public String login(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "login";

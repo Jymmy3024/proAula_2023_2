@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Registrar Productos</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+              rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header th:replace="~{plantillas/tiendaPartes :: cabecera}"></header>
+        <div class="container pb-3">
+            <h1 class="text-center">Registrar Producto en la tienda</h1><br>
+            <div th:if="${exception} != null" class="pt-4 pb-4 text-center">
+                <span th:text="${exception}" class="alert alert-warning  fw-bold fs-5"></span>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <div class="card-body">
+                    <form th:action="@{/productos/agregar}" th:object="${producto}" method="POST">                        
+                        <h4 class="text-center">Detalles del Producto</h4>
+                        <div clas="form-group">
+                            <label>Stock : </label>
+                            <input type="text" maxlength="8" pattern="[0-9]+" title="Se permiten solo numeros"  name="stock" th:field="*{stock}"  class="form-control" placeholder="Digite la cantidad de productos en stock : ">
+                            <div th:if="${#fields.hasErrors('stock')}" class="p-1">
+                                <span class="text-danger" th:errors="*{stock}"></span>
+                            </div>
+                        </div>    
+                        <br>
+                        <div clas="form-group">    
+                            <label>Precio Unitario : </label>
+                            <input class="form-control" type="text" pattern="[0-9.]{1,14}" title="Se permiten solo numeros y puntos" maxlength="14" name="precioUnitario" th:field="*{precioUnitario}" placeholder="Digite el Precio del producto : " required >
+                            <div th:if="${#fields.hasErrors('precioUnitario')}" class="p-1">
+                                <span class="text-danger" th:errors="*{stock}"></span>
+                            </div>
+                        </div>    
+                        <br>
+                        <div clas="form-group">
+                            <label>Precio por unidad de medida : </label>
+                            <input class="form-control" th:field="*{pum}" pattern="[0-9.]{1,8}" maxlength="8" title="Se permiten solo numeros y puntos" type="text" placeholder="Digite el precio por unidad de medida (g, ml, kg, L)">
+                            <div th:if="${#fields.hasErrors('pum')}" class="p-1">
+                                <span class="text-danger fw-bold fs-7" th:errors="*{pum}"></span>
+                            </div>
+                            <!--<select th:value="${tipomedida}" class="custom-select" id="inputGroupSelect03" aria-label="Example select with button addon">
+                                <option selected>Seleccione</option>
+                                <option value="-">no aplica<option>
+                                <option value="g">por gramo (g)</option>
+                                <option value="ml">por mililitro (ml)</option>
+                                <option value="u">por unidad (u)</option>
+                                <option value="kg">por kilogramo (kg)</option>                                    
+                            </select>
+                            <div th:if="${#fields.hasErrors('tipomedida')}" class="p-1">
+                                <span class="text-danger" th:errors="*{stock}"></span>
+                            </div>-->
+                        </div>
+                        <br>
+                        <div clas="form-group">
+                            <label for="diponibilidad">¿Este producto esta disponible?</label>
+                            <select class="form-control" th:field="*{disponibilidad}" name="disponibilidad">
+                                <option value="false">No</option>
+                                <option value="true" selected>Si</option>                                
+                            </select>
+                            <div th:if="${#fields.hasErrors('disponibilidad')}" class="p-1">
+                                <span class="text-danger" th:errors="*{stock}"></span>
+                            </div>
+                        </div>                
+                        <br>
+                        <h4 class="text-center">Datos generales del producto</h4>
+                        <div clas="form-group">
+                            <label>Cod Producto global : </label>
+                            <input readonly type="text" name="codigopg" th:field="*{productoGlobal.codigo}" class="form-control">
+                            <br>
+                        </div>
+                        <div clas="form-group">    
+                            <label>Nombre general : </label>
+                            <input readonly type="text" name="nombrepg" th:field="*{productoGlobal.nombre}" class="form-control" placeholder="Digite su primer nombre : " required maxlength="15">
+                        </div>
+                        <br>
+                        <h4 class="text-center">Datos de la tienda</h4>
+                        <div clas="form-group">
+                            <label>Cod nit Tienda : </label>
+                            <input readonly type="text" name="nit" th:field="*{tienda.nit}" class="form-control" >
+                            <br>
+                        </div>    
+                         <div clas="form-group">
+                            <label>Tienda : </label>
+                            <input readonly type="text" name="nombret" th:field="*{tienda.nombre}" class="form-control" >
+                        </div>  
+                        <br>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>        
+        </div>
+        
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,43 +1,59 @@
 package co.unicolombo.edu.models;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name = "tiendas", schema = "dbo", catalog = "proaula_6")
+@Table(name = "tiendas")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Tienda implements Serializable{
     
-    private static final long SerialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo", nullable = false)
-    private int codigo;
+    @Column(name = "nit", nullable = false)
+    @NotNull
+    private int nit;
     @Column(name = "descripcion", nullable = true, length = 200)
     private String descripcion;
     @Column(name = "nombre", nullable = false, length = 45)
-    @NotBlank
-    @NotEmpty
+    @NotNull
     private String nombre;
-    @Column(name = "ruta_imagen", nullable = true, length = 200)
+    @Column(name = "ruta_imagen", nullable = true, length = 200)   
     private String ruta_imagen;
-    @Column(name = "nit", nullable = false)
-    @NotBlank
-    @NotEmpty
-    private int nit;
     @Column(name = "tipo", nullable = true, length = 15)
+    @NotEmpty
     private String tipo;
+    @Transient
+    private MultipartFile imagen;
+    
+    //Una Tienda tiene muchos Productos
+    @OneToMany(mappedBy = "tienda",fetch = FetchType.LAZY)
+    private List<Producto> listaProductos;  
+    
+    @Override
+    public String toString(){
+        return "Tienda{"
+                + " nit = "+this.nit
+                + ", descripcion = "+this.descripcion
+                + ", nombre = "+this.nombre
+                + ", ruta_imagen = "+this.ruta_imagen
+                + ", tipo = "+this.tipo
+                + "}";
+    }   
 }
