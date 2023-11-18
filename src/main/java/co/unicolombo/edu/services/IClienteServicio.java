@@ -22,4 +22,5 @@ public interface IClienteServicio {
     public Cliente buscar (Cliente cliente);
     
     public Cliente loginCliente (String correo, String password);
+    
 }

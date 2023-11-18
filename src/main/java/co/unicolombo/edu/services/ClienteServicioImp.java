@@ -39,8 +39,8 @@ public class ClienteServicioImp implements IClienteServicio{
         clienteRepo.delete(cliente);
     }
 
-    @Transactional(readOnly = true)
-    @Override
+    @Transactional(readOnly = true) //esto para que es? para buscar al cliente.  si pero el transactional yo creo que debo usar eso pero no se para que es, eso es para que solo lo lea
+    @Override //ahh debe se algo del readonly ese. pero osea si uno no pone que sera lo que esta haciendo, porque a mi me sale algo de una sesion  , y yo no estoy iniciando sesion con el empledo ni nda
     public Cliente buscar(Cliente cliente) {
         String cedulaString = cliente.getCedula();
         int cedula = Integer.parseInt(cedulaString);
@@ -53,4 +53,5 @@ public class ClienteServicioImp implements IClienteServicio{
         Cliente user = clienteRepo.findByCorreoAndPassword(correo, password);
         return user;
     }
+    
 }

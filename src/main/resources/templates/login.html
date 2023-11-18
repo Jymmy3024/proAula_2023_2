@@ -33,6 +33,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <img src="https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-No-Background.png" width="40%"/>
                                     </div>
                                     <center>
+                                        <div th:if="${success != null}" class="alert alert-success alert-dismissable">
+                                            <label th:text="${success}"></label>
+                                        </div>
                                         <div th:if="${mensajeError != null}" class="alert alert-danger" role="alert">
                                             <span th:text="${mensajeError}"></span>
                                         </div>

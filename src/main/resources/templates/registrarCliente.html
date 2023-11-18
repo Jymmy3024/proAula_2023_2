@@ -25,6 +25,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 </div>
                                 <div th:if="${ exception} != null">
                                     <span class="text-danger" th:text="${exception}">   
+                                        <a href="registrarCliente.html"></a>
                                     </span>
                                 </div>
                                 <form class="col-12" th:action="@{/guardarCliente}" method="POST" th:object="${cliente}">
@@ -109,7 +110,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <span th:if="${#fields.hasErrors('genero')}" class="text-danger" th:errors="*{genero}">
                                         </span>
                                     </div>
-                                    
+
                                     <div class="form-group">
 
                                         <label for="InputGenero">
@@ -119,7 +120,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <span th:if="${#fields.hasErrors('direccion_envio')}" class="text-danger" th:errors="*{direccion_envio}">
                                         </span>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">
                                             Registrame como cliente

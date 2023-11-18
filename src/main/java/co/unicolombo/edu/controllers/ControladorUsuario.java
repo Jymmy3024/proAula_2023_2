@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 /**
  *
@@ -38,7 +40,7 @@ public class ControladorUsuario {
     }
     
     @PostMapping("/guardarCliente") //@Validated para que haga las validaciones 
-    public String guardarCliente(@Validated Cliente cliente, BindingResult bindingResult, Model modelo) { 
+    public String guardarCliente(@Validated Cliente cliente, BindingResult bindingResult, Model modelo, RedirectAttributes redirectAttributes) { 
         
         try{
         // Validamos los campos del formulario
@@ -50,9 +52,11 @@ public class ControladorUsuario {
 
         // Guardamos el usuario en la base de datos
         clienteServicio.guardarCliente(cliente);
-
-        // Redirigimos a la página de registrar cliente
-        return "redirect:/";
+        
+        redirectAttributes.addFlashAttribute("success", cliente.getNombre1()+" ¡Registro exitoso!\nInicie sesión.");
+        
+        // Redirigimos a la página de login
+        return "redirect:/clienteLogin";
         }catch(Exception e){
             System.out.println(e.getCause());
             modelo.addAttribute("exception", e); //Esto es por si hay un error de ejecucion
@@ -61,7 +65,5 @@ public class ControladorUsuario {
         }
                 
     }
-    
-    
 
 }

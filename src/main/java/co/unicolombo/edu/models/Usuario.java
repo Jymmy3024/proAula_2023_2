@@ -13,6 +13,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,6 +25,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**

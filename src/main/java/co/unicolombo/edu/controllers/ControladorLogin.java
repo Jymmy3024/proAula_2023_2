@@ -30,7 +30,7 @@ public class ControladorLogin {
         this.clienterServicio = clienterServicio;
     }
     
-    @GetMapping("/cliente/login")
+    @GetMapping("/clienteLogin") 
     public String login(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "login";
@@ -44,7 +44,7 @@ public class ControladorLogin {
             modelo.addAttribute("mensajeError", "Email o contraseña incorrecta");
             return "login";
         } else {
-            return "home";
+            return "index";
         }
     }
 }
