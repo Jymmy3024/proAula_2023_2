@@ -31,7 +31,7 @@ public class TiendaController {
     private StorageServiceImp storageService;
 
 
-    @GetMapping(value = {"inicio", "/", ""})
+    @GetMapping("inicio")
     public ModelAndView inicio(@PageableDefault(sort = "nombre", size = 8)Pageable pageable) throws Exception {
         try {
             Page<Tienda> tiendaList = tiendaCrud.listarTiendas(pageable);
@@ -44,6 +44,11 @@ public class TiendaController {
                     .addObject("msjIni", msjIni);
         }
 
+    }
+    
+    @GetMapping(value={"inicio/","/",""})
+    public String redireccionar(){
+        return "redirect:/inicio";
     }
 
     @GetMapping("inicio/listarCategoria/{tipo}")

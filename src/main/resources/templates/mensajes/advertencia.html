@@ -1,0 +1,61 @@
+
+<html xmlsn:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${mensaje.titulo}"></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            *{
+                margin:0;
+            }
+            
+            body{
+                background-color:  lightyellow;
+            }
+
+            .titulo{
+                font-family: Verdana;
+                color:  crimson;
+                text-align: center;
+                box-sizing: border-box;
+                box-shadow: 0 0 20px rgba(196, 196, 196, 0.5);
+            }
+
+            .container{
+                align-items: center;
+                justify-content: center;
+            }
+
+            .container .icono{
+                display: flex;
+                justify-content: center;
+            }
+
+            .icono img{
+                width: 150px;
+            }
+
+            .mensaje{
+                font-family: monospace;
+                color: black;
+                text-align: center;
+                margin-left: 4em; 
+                margin-right: 4em;
+                max-width: 800px;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="icono"><img src="/iconos/advertencia.png"/></div>
+            <br>
+            <h1 class="titulo" th:text="${mensaje.titulo}"></h1>
+            <br>
+            <h3 class="mensaje" th:text="${mensaje.mensaje}"></h3>    
+        </div>
+
+    </body>
+</html>

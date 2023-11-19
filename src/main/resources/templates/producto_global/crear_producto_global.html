@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <header th:replace="~{plantillas/tiendaPartes :: cabecera}"></header>
+        <header th:replace="~{plantillas/tiendaPartes :: cabecera (tienda=${tienda})}"></header>
         <div class="container pb-4">
             <h1 class="text-center">Crear nuevo Producto</h1><br>
             <div th:if="${exception} != null" class=" pt-4 pb-4 text-center">
@@ -61,7 +61,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <br>
                         <div class="form-group">
                             <label>Imagen : </label>
-                            <input type="file" class="form-control" id="imagen" name="imagen"/>
+                            <input accept="image/" type="file" class="form-control" id="imagen" name="imagen"/>
                             <div th:if="${#fields.hasErrors('imagen')}" class="p-1">
                                 <span class="text-danger" th:errors="*{imagen}"></span>
                             </div>
