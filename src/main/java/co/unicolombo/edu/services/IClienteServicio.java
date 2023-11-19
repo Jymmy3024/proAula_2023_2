@@ -23,4 +23,6 @@ public interface IClienteServicio {
     
     public Cliente loginCliente (String correo, String password);
     
+    public boolean cedulaExistente (String cedula);
+    
 }

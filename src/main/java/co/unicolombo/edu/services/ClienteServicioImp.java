@@ -16,17 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
  * @author York Severiche
  */
 @Service
-public class ClienteServicioImp implements IClienteServicio{
-    
+public class ClienteServicioImp implements IClienteServicio {
+
     @Autowired
     ClienteRepository clienteRepo;
-    
+
     @Transactional(readOnly = true)
     @Override
-    public List<Cliente> listarClientes(){
+    public List<Cliente> listarClientes() {
         return (List<Cliente>) clienteRepo.findAll();
     }
-    
+
     @Transactional
     @Override
     public void guardarCliente(Cliente cliente) {
@@ -46,12 +46,19 @@ public class ClienteServicioImp implements IClienteServicio{
         int cedula = Integer.parseInt(cedulaString);
         return clienteRepo.findById(cedula).orElse(null);
     }
-    
+
     @Transactional(readOnly = true)
     @Override
     public Cliente loginCliente(String correo, String password) {
         Cliente user = clienteRepo.findByCorreoAndPassword(correo, password);
         return user;
     }
-    
+
+    @Transactional(readOnly = true)
+    @Override
+    public boolean cedulaExistente(String cedula) {
+        Cliente cliente = clienteRepo.findByCedula(cedula);
+        return cliente != null;
+    }
+
 }

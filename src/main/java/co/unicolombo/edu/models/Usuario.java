@@ -42,40 +42,40 @@ public class Usuario implements Serializable{
     @Id
     @Basic(optional = false)
     @Pattern(regexp = "[0-9]+")
-    @Size(max = 15)
+    @Size(max = 15, message = "La cedula debe contener max 15 caracteres")
     @NotEmpty(message = "La cedula es requerida")
     @Column(name = "cedula",nullable = false, length = 15)
     private String cedula;
     
     @NotBlank
     @NotEmpty
-    @Size(max = 20)
+    @Size(max = 20, message = "La Primer Nombre debe contener max 20 caracteres")
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "El nombre no debe contener caracteres especiales")
     @Column(name = "nombre1", length = 45, nullable=false)
     private String nombre1;
     
-    @Size(max = 20)
-    @NotEmpty
+    @Size(max = 20, message = "La Segundo Nombre debe contener max 20 caracteres")
     @Column(name = "nombre2", length = 20, nullable=true)
     private String nombre2;
     
     @NotBlank
     @NotEmpty
-    @Size(max = 20)
-    @Column(name = "apellido1", length = 20, nullable=false)
+    @Size(max = 20, message = "La Primer Apellido debe contener max 20 caracteres")
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "El apellido no debe contener caracteres especiales")
+    @Column(name = "apellido1", length = 20, nullable=false, unique = true)
     private String apellido1;
     
-    @NotEmpty
     @Column(name = "apellido2", length = 45, nullable=true)
     private String apellido2;
     
     @Email(message = "Digite un email valido")
     @NotEmpty(message = "El correo es requerido") 
-    @Size(max = 45)
-    @Column(name = "correo", length = 45, nullable=false)
+    @Size(max = 45, message = "La Correo debe contener max 45 caracteres")
+    @Column(name = "correo", length = 45, nullable=false, unique = true)
     private String correo;
     
     @NotEmpty(message = "La contraseña es requerida")
-    @Size(max = 20)
+    @Size(max = 20, message = "El Password debe contener max 20 caracteres")
     @Column(name = "password", length = 20, nullable=false)
     private String password;
     

@@ -23,8 +23,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <div class="col-12 user-img">                                    
                                     <img src="https://cdn-icons-png.flaticon.com/512/1208/1208737.png" width="40%"/>
                                 </div>
-                                <div th:if="${ exception} != null">
-                                    <span class="text-danger" th:text="${exception}">   
+                                <div th:if="${ exception} != null" class="alert alert-danger" role="alert">
+                                    <span th:text="${exception}">   
+                                        <a href="registrarCliente.html"></a>
+                                    </span>
+                                </div>
+                                <div th:if="${mensajeErrorCedula != null}" class="alert alert-danger" role="alert">
+                                    <span th:text="${mensajeErrorCedula}">
                                         <a href="registrarCliente.html"></a>
                                     </span>
                                 </div>
@@ -82,6 +87,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <input type="email" class="form-control" id="InputEmail" th:field="*{correo}" />
                                         <span th:if="${#fields.hasErrors('correo')}" class="text-danger" th:errors="*{correo}">
                                         </span>
+                                        <div th:if="${mensajeErrorCorreo != null}" class="alert alert-danger" role="alert">
+                                            <span th:text="${mensajeErrorCorreo}"></span>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="InputContraseña">
