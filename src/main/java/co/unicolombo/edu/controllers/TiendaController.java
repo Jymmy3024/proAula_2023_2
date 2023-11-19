@@ -92,24 +92,4 @@ public class TiendaController {
         }
     }
     
-   /* @PostMapping("inicio/buscar-tiendas")
-    public ModelAndView buscarTiendas(String nombre, Pageable pageable) throws Exception{
-        Page<Tienda> listTNE = tiendaCrud.listarTiendas(pageable);
-        try{
-            if(nombre.isBlank() || nombre.isEmpty()){
-                return new ModelAndView("index")
-                        .addObject("msjBT", "El campo para buscar no debe estar vacio")
-                        .addObject("tiendaList", listTNE);
-            }else{
-            List<Tienda> listTBN = tiendaCrud.buscarTiendasPorNombre(nombre);
-            return new ModelAndView("index")
-                    .addObject("tiendaList", listTBN);
-            }
-        }catch(Exception e){
-            return new ModelAndView("index")
-                    .addObject("msjBT", e.getMessage())
-                    .addObject("tiendaList", listTNE);
-        }
-        
-    }*/
 }

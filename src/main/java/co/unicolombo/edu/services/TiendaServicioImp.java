@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
  * @author jimmy
  */
 @Service
-public class TiendaServicioImp implements ITiendaServicio {
-
+public class TiendaServicioImp implements ITiendaServicio{
+    
     @Autowired
     private TiendaRepository tiendaRepo;
 
@@ -26,6 +26,7 @@ public class TiendaServicioImp implements ITiendaServicio {
     private ProductoRepository productoRepo;
 
     @Override
+
     public Page<Tienda> listarTiendas(@PageableDefault(sort = "nombre", size = 8) Pageable pageable) throws Exception {
         Page<Tienda> listTienda = tiendaRepo.findAll(pageable);
         if (listTienda == null && listTienda.isEmpty()) {
