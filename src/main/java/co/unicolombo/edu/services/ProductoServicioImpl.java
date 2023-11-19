@@ -79,15 +79,25 @@ public class ProductoServicioImpl implements ProductoServicio{
     
     @Override
     public Page<Producto> listAllByTienda(Tienda tienda, Pageable pageable) throws Exception{
-        Page<Producto> productos = repositorio.findAllByTienda(tienda, pageable);        
-            return productos;                   
+        Page<Producto> productos = repositorio.findAllByTienda(tienda, pageable);
+        if(productos != null || !productos.isEmpty()){
+            return productos; 
+        }else{
+            throw new Exception("No hay productos registrados");
+        }
+                              
     }
 
     @Override
     public List<Producto> searchInTienda(Integer tienda, String busqueda) {
         return this.repositorio.buscarEnTienda(tienda, busqueda);
+        
     }
     
     
-    
+    @Override
+    public void eliminar(Producto p){
+        repositorio.deleteById(p.getId());
+    }
+
 }

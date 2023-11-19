@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
  *
  * @author CDOG
  */
-
-
 public interface ProductoServicio {         
     
     public void guardarProducto(Producto producto);
@@ -29,4 +27,7 @@ public interface ProductoServicio {
     public Page<Producto> listAllByTienda(Tienda tienda, Pageable pageable) throws Exception;
     
     public List<Producto> searchInTienda (Integer tienda, String busqueda);
+    
+    public void eliminar(Producto p);
+            
 }

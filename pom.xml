@@ -15,8 +15,8 @@
     <description>Proyecto Aula periodo 2023-2</description>
     <properties>
         <java.version>20</java.version>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
+        <maven.compiler.release>20</maven.compiler.release>
+        <start-class>co.unicolombo.edu.ProAula20232Application</start-class>
     </properties>
     <dependencies>
         <dependency>
@@ -79,6 +79,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
                 <configuration>
                     <showDeprecation>false</showDeprecation>
                     <debug>true</debug>

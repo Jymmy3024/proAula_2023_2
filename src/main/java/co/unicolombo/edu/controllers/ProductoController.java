@@ -51,7 +51,7 @@ public class ProductoController {
         /**
          * ***********LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION*
          */
-        Tienda t = tServicio.obtenerPorNit(4112);
+        Tienda t = tServicio.obtenerPorNit(1000);
         Producto p = new Producto();
         p.setProductoGlobal(pgServicio.getByCodigo(codigoPg));
         p.setTienda(t);
@@ -120,7 +120,7 @@ public class ProductoController {
     }
     
     @GetMapping("tiendas/resultados/{nit}")
-    public ModelAndView showResultsForShops(@PathVariable("nit") Integer nit, @Param("busqueda") String busqueda) {
+    public ModelAndView showResultsForShops(@PathVariable(name ="nit", required = false) Integer nit, @Param("busqueda") String busqueda) {
         try {
                         
             ModelAndView modelo = new ModelAndView("listar_productos.html");
@@ -163,6 +163,34 @@ public class ProductoController {
         }catch(Exception e){
             return new ModelAndView("listar_productos")
                     .addObject("msjNP", e.getMessage());
+        }
+    }
+    @GetMapping("tienda/listar/productos")
+    public ModelAndView listarProductosTienda(Pageable pageable){
+        try{
+            ModelAndView modelo = new ModelAndView("producto/listar_productos_tienda");
+            Tienda t = tServicio.obtenerPorNit(1000);
+            modelo.addObject("tienda", t);
+            System.out.println(t.getNombre());
+            Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
+         
+            return modelo.addObject("productos", listPro);
+                        
+        }catch(Exception e){
+            return new ModelAndView("listar_productos")
+                    .addObject("msjNP", e.getMessage());
+        }
+    }
+    @PostMapping("productos/eliminar/{id}")
+    public ModelAndView eliminarProducto(@PathVariable(name = "id") Integer id) throws Exception{
+        try{
+            Producto pro = pServicio.getById(id);
+            pServicio.eliminar(pro);
+            return new ModelAndView("redirect:/tienda/listar/productos")
+                    .addObject("msj", "Producto eliminado con exito.");
+        }catch(Exception e){
+            return new ModelAndView("producto/listar_productos_tienda")
+                    .addObject("msjF", e.getMessage()); 
         }
     }
 }    
