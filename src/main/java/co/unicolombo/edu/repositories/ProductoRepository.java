@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 
 /**
  *
@@ -26,5 +28,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
             nativeQuery = true)
     public List<Producto> buscarEnTienda(Integer tienda, String busqueda);
     
-    Page<Producto> findAllByTienda(Tienda tienda, Pageable pageable);
+    public Page<Producto> findAllByTienda(Tienda tienda, Pageable pageable);   
+    
 }
