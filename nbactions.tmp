@@ -12,6 +12,10 @@
             <run.jvmArguments>-noverify -XX:TieredStopAtLevel=1 </run.jvmArguments>
             <run.mainClass>co.unicolombo.edu.ProAula_2023_2Application</run.mainClass>
             <Env.SPRING_OUTPUT_ANSI_ENABLED>always</Env.SPRING_OUTPUT_ANSI_ENABLED>
+<<<<<<< HEAD:nbactions.tmp
+=======
+            
+>>>>>>> feature/registrar_admin_tienda:nbactions.xml
         </properties>
     </action>
     <action>
@@ -27,6 +31,10 @@
             <run.mainClass>co.unicolombo.edu.ProAula_2023_2Application</run.mainClass>
             <Env.SPRING_OUTPUT_ANSI_ENABLED>always</Env.SPRING_OUTPUT_ANSI_ENABLED>
             <jpda.listen>true</jpda.listen>
+<<<<<<< HEAD:nbactions.tmp
+=======
+            
+>>>>>>> feature/registrar_admin_tienda:nbactions.xml
         </properties>
     </action>
     <action>

@@ -28,6 +28,8 @@ import lombok.NoArgsConstructor;
                                                                     //y name es para la columna de la tabla hija
 public class Cliente extends Usuario{
 
+    private static final long serialVersionUID = 1L;
+
     @NotEmpty
     @Column(name="direccion_envio")
     private String direccion_envio;
