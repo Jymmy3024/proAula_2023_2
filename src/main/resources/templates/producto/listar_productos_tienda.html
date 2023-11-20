@@ -9,11 +9,11 @@
               rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <style>
         .verde {
-            background-color: green;
+            display: block;
         }
 
         .rojo {
-            background-color: red;
+            display: none;
         }
     </style>
     </head>
@@ -21,9 +21,17 @@
         <header th:replace="~{plantillas/indexPartes :: cabecera}"></header>
         <div class="container-fluid pt-3" >
             <div class="text-center"><p class="fw-bold fs-3 text center">Productos</p></div>
-            <div th:if="${msjF}">
+            <div th:if="${msjF}" class="p-2">
                 <span th:text="${msjF}" class="alert alert-danger fw-bold fs-5 mx-auto"></span>
             </div>
+            <center>
+            <div th:style="${msj} ? 'display : inline-block;' : 'display : none;'" class="alert alert-success pb-sm-3">
+                <span th:text="${msj}" 
+                    class="alert alert-dismissible fade show fw-bold fs-5" role="alert">
+                </span>
+                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+            </div>
+            </center>
         <div th:if="${productos !=null and !productos.empty}" class="table-responsive">
             <table border="1" class="table table-striped text-center">
                 <thead class="table-dark justify-content-center">
@@ -76,11 +84,13 @@
                 if(!confirm('¿Desea eliminar este producto?')){
                     return;
                 }else{
-                    $('#eliminarProductoForm' + id).submit().window.alert("Producto eliminado");
+                    $('#eliminarProductoForm' + id).submit();
+                    
                 }
+                
             }
+            
         </script>
-        
         
         
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 

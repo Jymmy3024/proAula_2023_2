@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -182,12 +183,12 @@ public class ProductoController {
         }
     }
     @PostMapping("productos/eliminar/{id}")
-    public ModelAndView eliminarProducto(@PathVariable(name = "id") Integer id) throws Exception{
+    public ModelAndView eliminarProducto(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) throws Exception{
         try{
             Producto pro = pServicio.getById(id);
             pServicio.eliminar(pro);
-            return new ModelAndView("redirect:/tienda/listar/productos")
-                    .addObject("msj", "Producto eliminado con exito.");
+            redirectAttributes.addFlashAttribute("msj", "Producto eliminado con exito.");
+            return new ModelAndView("redirect:/tienda/listar/productos");
         }catch(Exception e){
             return new ModelAndView("producto/listar_productos_tienda")
                     .addObject("msjF", e.getMessage()); 

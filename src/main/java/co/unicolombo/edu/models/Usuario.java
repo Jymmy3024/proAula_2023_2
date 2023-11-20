@@ -54,7 +54,6 @@ public class Usuario implements Serializable{
     private String nombre1;
     
     @Size(max = 20)
-    @NotEmpty
     @Column(name = "nombre2", length = 20, nullable=true)
     private String nombre2;
     

@@ -9,7 +9,7 @@
                       rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <style th:fragment="estilos">
             body {
-                background-image: url('https://www.enretail.com/wp-content/uploads/2020/03/eCommerce-1.jpg');
+                background-image: url('assets/fondo.png');
                 margin-top: auto;
                 background-size: cover;
                 background-repeat: no-repeat;
@@ -28,6 +28,10 @@
                 cursor: url;
                 text-decoration: underline;
                 color: azure;
+            }
+            a #user{
+                border-radius:100px;
+                border: none
             }
         </style>
     </head>
@@ -63,9 +67,16 @@
                                 </a>
                             </li>
                             <ul class="navbar-nav">
+                                <div th:if="${nUser == null}">
                                 <li class="nav-item pe-2">
-                                    <a class="btn btn-primary" href="#" target="contenido">Login</a>
+                                    <a class="btn btn-primary" th:href="@{/clienteLogin}" target="contenido">Login</a>
                                 </li>
+                                </div>
+                                <div th:if="${nUser != null}">
+                                <li class="nav-item pe-2" >
+                                    <a class="btn btn-primary fw-bold" id="user" th:text="${nUser}"></a>
+                                </li>    
+                                </div>
                             </ul>
                             <form class="d-flex" th:action="@{/productos/resultados}" role="search" method="GET">
                                 <input class="form-control me-2" name="busqueda" type="search" placeholder="Buscar en Tuti" aria-label="Search">

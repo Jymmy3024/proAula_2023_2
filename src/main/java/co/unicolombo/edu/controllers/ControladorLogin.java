@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -37,14 +38,16 @@ public class ControladorLogin {
     }
 
     @PostMapping("/iniciarSesion")
-    public String login(@ModelAttribute("usuario") Usuario user, Model modelo) {
+    public String login(@ModelAttribute("usuario") Usuario user, Model modelo, RedirectAttributes redirectAttributes) {
         
         Cliente iniciar = clienterServicio.loginCliente(user.getCorreo(), user.getPassword());
         if (iniciar == null) {
             modelo.addAttribute("mensajeError", "Email o contraseña incorrecta");
             return "login";
         } else {
-            return "index";
+            
+            redirectAttributes.addFlashAttribute("nUser",  iniciar.getNombre1().charAt(0));
+            return "redirect:/inicio";
         }
     }
 }

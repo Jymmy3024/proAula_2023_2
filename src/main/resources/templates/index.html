@@ -26,8 +26,8 @@
             <span class="alert alert-danger fs-5 fw-bold" th:text="${msjBT}"></span>
         </div>
 
-        <div class="container-fluid mx-3">
-            <div th:if="${tiendaList != null && !tiendaList.empty}" class="row row-cols-sm-4">
+        <div class="container-fluid " style="min-height: 350px">
+            <div th:if="${tiendaList != null && !tiendaList.empty}" class="row row-cols-sm-4 mx-3">
                 <div class="col-sm-auto col-md-auto col-lg-auto p-sm-2 ps-sm-4" th:each="t : ${tiendaList}">
                     <a th:href="@{/inicio/listar/productos/{nit}(nit=${t.nit})}" class="text-decoration-none">
                         <div class="card" style="width: 18rem;">
