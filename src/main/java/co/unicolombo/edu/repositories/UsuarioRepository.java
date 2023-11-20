@@ -12,5 +12,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author York Severiche
  */
 public interface UsuarioRepository extends JpaRepository<Usuario, String> {
-    
+
 }
