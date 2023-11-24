@@ -22,4 +22,6 @@ public interface AdminTiendaServicio {
     public AdminTienda saveAdminTienda(AdminTienda adminTienda) throws Exception;
     
     public List<AdminTienda> listByTienda(Tienda tienda);    
+    
+    public AdminTienda login(String correo, String password);
 }

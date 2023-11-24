@@ -14,4 +14,8 @@ public interface AdminTiendaRepository extends JpaRepository<AdminTienda, String
     
     public boolean existsByCedulaAndTienda(String cedula, Tienda tienda);
     
+    public boolean existsByCorreoAndPassword(String correo, String password);
+    
+    public AdminTienda findByCorreo(String correo);
+       
 }

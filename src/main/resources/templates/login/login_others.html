@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Login</title>
+
+    <meta charset="UTF-8">
+
+
+
+    <!-- FRAMEWORK Ionic para los iconos-->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- Nuestro css-->
+    <link rel="stylesheet" href="../static/css/estiloLogin.css" />
+
+    <script src="../static/css/js/mensajeLogin.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        * {
+            padding: 0;
+        }
+        
+        .pie {
+            margin-top: 5em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: rgb(52, 64, 75);
+        }
+        
+        .pie a {
+            text-decoration: none;
+            cursor: url;
+            text-decoration: underline;
+            color: azure;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <header th:replace="~{plantillas/indexPartes :: cabecera }"></header>
+    <div class="modal-dialog text-center">
+        <div class="col-sm-8 main-section " style="margin:auto;">
+            <div class="modal-content " style="width: 700px;">
+                <div class="col-12 user-img ">
+                    <img src="/iconos/admin.png " width="30% " />
+                </div>
+                <center>
+                    <div th:if="${success != null} " class="alert alert-success alert-dismissable ">
+                        <label th:text="${success} "></label>
+                    </div>
+                    <div th:if="${mensajeError != null} " class="alert alert-danger " role="alert ">
+                        <span th:text="${mensajeError} "></span>
+                    </div>
+                    <form class="col-12 " th:action="@{/login/otros} " method="POST" th:object="${usuario} ">
+                        <div class="form-group " id="user-group ">
+                            <ion-icon name="person-circle-sharp " class="input-icon "></ion-icon>
+                            <input id="correo " type="email " class="form-control with-icon " placeholder="Correo " name="correo " th:field="*{correo} " required/>
+                        </div>
+                        <div class="form-group " id="contrasena-group ">
+                            <ion-icon name="lock-closed " class="input-icon "></ion-icon>
+                            <input id="contrasena " type="password" class="form-control with-icon " placeholder="Password " name="password " th:field="*{password} " required/>
+                        </div>
+                        <br>
+                        <br>
+                        <p>Iniciar como: </p>
+                        <!--Tipo de ingreso-->
+                        <div th:object="rol">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio"="admin" id="inlineRadio1">
+                                <label class="form-check-label" for="inlineRadio1">Administrador de tienda</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="repartidor" id="inlineRadio2">
+                                <label class="form-check-label" for="inlineRadio2">Repartidor</label>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-group ">
+                            <button type="submit " class="btn btn-primary ">
+                                    Ingresar
+                                </button>
+                        </div>
+                        <br>
+
+                    </form>
+
+                    <div class="col-12 registro ">
+                        <a th:href="@{/inicio/registrar-tienda} ">Registrar mi Tienda</a>
+                    </div>
+                    <div class="col-12 registro ">
+                        <a th:href="@{/agregarRepartidor} ">Registrar como Repartidor</a>
+                    </div><br>
+                    <div class="col-12 forgot ">
+                        <a href="# ">Recordar contrasena?</a>
+                    </div>
+            </div>
+            </center>
+        </div>
+    </div>
+    <footer th:replace="~{plantillas/indexPartes :: piePagina}"></footer>
+</body>
+
+</html>

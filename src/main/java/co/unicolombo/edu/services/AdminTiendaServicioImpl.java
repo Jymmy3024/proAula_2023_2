@@ -136,4 +136,18 @@ public class AdminTiendaServicioImpl implements AdminTiendaServicio {
         //this.repositorio.save(adminTienda);
     }
 
+    @Override
+    public AdminTienda login(String correo, String password) {
+        AdminTienda admin = null;
+        
+        if(correo != null && !correo.isEmpty() && password != null && !password.isEmpty()){            
+            
+            if(this.repositorio.existsByCorreoAndPassword(correo, password)){
+               admin = this.repositorio.findByCorreo(correo);
+            }
+        }
+        
+        return admin;
+    }
+
 }
