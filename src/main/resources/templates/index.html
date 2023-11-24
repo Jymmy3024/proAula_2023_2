@@ -3,6 +3,7 @@
         <title>Inicio</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
               rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <style th:replace="~{plantillas/indexPartes :: estilos}"></style>
@@ -52,6 +53,14 @@
         </div>
 
     </container>
+    <script>
+        $(documet).ready(function(){
+           var a_pro = $("#a-pro");
+           a_pro.replaceWith("<a>promosiones</a>");
+           $("#a-pro").attr('th:href', '#');
+        }); 
+    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <footer th:replace="~{plantillas/indexPartes :: piePagina}"></footer>

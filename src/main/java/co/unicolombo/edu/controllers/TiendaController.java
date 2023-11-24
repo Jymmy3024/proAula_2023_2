@@ -1,8 +1,10 @@
 package co.unicolombo.edu.controllers;
 
+import co.unicolombo.edu.models.Cliente;
 import co.unicolombo.edu.models.Tienda;
 import co.unicolombo.edu.services.ITiendaServicio;
 import co.unicolombo.edu.services.storage.StorageServiceImp;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,13 +34,19 @@ public class TiendaController {
 
 
     @GetMapping("inicio")
-    public ModelAndView inicio(@PageableDefault(sort = "nombre", size = 8)Pageable pageable) throws Exception {
+    public ModelAndView inicio(@PageableDefault(sort = "nombre", size = 8)Pageable pageable, HttpSession sesion) throws Exception {
         try {
             Page<Tienda> tiendaList = tiendaCrud.listarTiendas(pageable);
+            Cliente cliente = (Cliente)sesion.getAttribute("user");
+            if(cliente != null){
             return new ModelAndView("index")   
+                    .addObject("tiendaList", tiendaList)
+                    .addObject("usuario", cliente.getNombre1().toUpperCase().charAt(0));
+            }else{
+                 return new ModelAndView("index")   
                     .addObject("tiendaList", tiendaList);
-                    
-        } catch (Exception e) {
+            }
+            } catch (Exception e) {
             String msjIni = e.getMessage();
             return new ModelAndView("index")
                     .addObject("msjIni", msjIni);
@@ -52,7 +60,7 @@ public class TiendaController {
     }
 
     @GetMapping("inicio/listarCategoria/{tipo}")
-    public ModelAndView listarByCategoria(@PathVariable("tipo") String tipo,Pageable pageable)throws Exception{
+    public ModelAndView listarByCategoria(@PathVariable("tipo") String tipo,Pageable pageable, HttpSession sesion)throws Exception{
         try{
             List<Tienda> listTC = tiendaCrud.listarPorCategoria(tipo);
             return new ModelAndView("index")

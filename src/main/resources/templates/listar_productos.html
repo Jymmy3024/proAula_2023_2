@@ -30,7 +30,7 @@
                 <h2>Productos</h2>
                 <img class="card-img-top" id="img-tienda" th:src="@{/assets/{filename}(filename=${tienda.ruta_imagen})}" />
             </div>
-        <div class="container-fluid" style="min-height: 300px;">
+        <div class="container-fluid" style="min-height: 407px;">
                 <div th:if="${listPro != null and !listPro.empty}" class="row row-cols-sm-auto row-cols-md-auto row-cols-lg-auto row-cols-xl-6">
                     <div class="col-auto col-sm-auto col-md-auto col-lg-auto col-xl-2 pb-sm-3 pb-md-3 p-3"  th:each="p : ${listPro}">
                         <div class="card">

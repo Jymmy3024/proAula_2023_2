@@ -1,5 +1,7 @@
 package co.unicolombo.edu.controllers;
 
+import co.unicolombo.edu.models.AdminTienda;
+import co.unicolombo.edu.models.Cliente;
 import co.unicolombo.edu.models.Producto;
 import co.unicolombo.edu.models.ProductoGlobal;
 import co.unicolombo.edu.models.Tienda;
@@ -68,7 +70,7 @@ public class ProductoController {
                     .addObject("producto", producto);
         }
         try {
-
+            Cliente cliente =(Cliente) sesion.getAttribute("user");
             //Recuperamos la tienda y el producto global
             Tienda tienda = tServicio.obtenerPorNit(producto.getTienda().getNit());
             ProductoGlobal productoGlobal = pgServicio.getByCodigo(producto.getProductoGlobal().getCodigo());
@@ -82,8 +84,13 @@ public class ProductoController {
 
             //finalmente lo guardamos
             pServicio.guardarProducto(producto);
-
-            return this.showFormAddProducts(null);
+            if(cliente != null){
+                return this.showFormAddProducts(null)
+                        .addObject("usuario", cliente.getNombre1().toUpperCase().charAt(0));
+            }else{
+                 return this.showFormAddProducts(null);
+            }
+           
         } catch (Exception e) {
             return new ModelAndView("producto/registrar_producto")
                     .addObject("exception", e.getMessage());
@@ -91,8 +98,9 @@ public class ProductoController {
     }
 
     @GetMapping("productos/resultados")
-    public ModelAndView showResultsPage(@Param("busqueda") String busqueda) {
+    public ModelAndView showResultsPage(@Param("busqueda") String busqueda, HttpSession sesion) {
         try {
+            Cliente cliente = (Cliente) sesion.getAttribute("user");
             ModelAndView modelo = new ModelAndView("busqueda");
             
             if (busqueda != null && !busqueda.isEmpty() && !busqueda.isBlank()) {
@@ -112,7 +120,8 @@ public class ProductoController {
                 }
             }
             
-            return modelo.addObject("busqueda", busqueda);
+            return modelo.addObject("busqueda", busqueda)
+                    .addObject("usuario", cliente.getNombre1().toUpperCase().charAt(0));
 
         } catch (Exception e) {
             return new ModelAndView("busqueda")
@@ -149,8 +158,9 @@ public class ProductoController {
             
     
     @GetMapping("inicio/listar/productos/{nit}")
-    public ModelAndView listarProductos(@PathVariable("nit") Integer nit,Pageable pageable){
+    public ModelAndView listarProductos(@PathVariable("nit") Integer nit,Pageable pageable, HttpSession sesion){
         try{
+            Cliente cliente =(Cliente) sesion.getAttribute("user");
             ModelAndView modelo = new ModelAndView("listar_productos");
             Tienda t = tServicio.obtenerPorNit(nit);
             modelo.addObject("tienda", t);
@@ -159,7 +169,12 @@ public class ProductoController {
             if(listPro == null ||listPro.isEmpty() ){                
                  modelo.addObject("msjEmpty","La tienda '"+t.getNombre()+"' no tiene productos.");
             } 
-            return modelo.addObject("listPro", listPro);
+            if(cliente != null){
+            return modelo.addObject("listPro", listPro)
+                    .addObject("usuario", cliente.getNombre1().toUpperCase().charAt(0));
+            }else{
+                return modelo.addObject("listPro", listPro);
+            }
                         
         }catch(Exception e){
             return new ModelAndView("listar_productos")
@@ -167,16 +182,20 @@ public class ProductoController {
         }
     }
     @GetMapping("tienda/listar/productos")
-    public ModelAndView listarProductosTienda(Pageable pageable){
+    public ModelAndView listarProductosTienda(Pageable pageable, HttpSession sesion){
         try{
+            AdminTienda admin = (AdminTienda) sesion.getAttribute("admin");
             ModelAndView modelo = new ModelAndView("producto/listar_productos_tienda");
-            Tienda t = tServicio.obtenerPorNit(1000);
+            Tienda t = tServicio.obtenerPorNit(4112);
             modelo.addObject("tienda", t);
             System.out.println(t.getNombre());
             Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
-         
+            if(admin != null){
+                return modelo.addObject("productos", listPro)
+                        .addObject("admin", admin.getNombre1().toUpperCase().charAt(0));
+            }else{
             return modelo.addObject("productos", listPro);
-                        
+            }            
         }catch(Exception e){
             return new ModelAndView("listar_productos")
                     .addObject("msjNP", e.getMessage());

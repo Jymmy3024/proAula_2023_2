@@ -18,9 +18,12 @@
     </style>
     </head>
     <body>
-        <header th:replace="~{plantillas/indexPartes :: cabecera}"></header>
-        <div class="container-fluid pt-3" >
+        <header th:replace="~{plantillas/indexPartes :: cabecera-gTiendas}"></header>
+        <div class="container-fluid pt-3">
             <div class="text-center"><p class="fw-bold fs-3 text center">Productos</p></div>
+            <div class="text-start pb-2">
+                <a th:href="@{/productos/agregar}" class="btn btn-success">Agregar</a>
+            </div>
             <div th:if="${msjF}" class="p-2">
                 <span th:text="${msjF}" class="alert alert-danger fw-bold fs-5 mx-auto"></span>
             </div>

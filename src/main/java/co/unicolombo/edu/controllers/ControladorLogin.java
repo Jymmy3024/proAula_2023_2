@@ -7,6 +7,9 @@ package co.unicolombo.edu.controllers;
 import co.unicolombo.edu.models.Cliente;
 import co.unicolombo.edu.models.Usuario;
 import co.unicolombo.edu.services.IClienteServicio;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import javax.swing.text.Document;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -38,16 +42,25 @@ public class ControladorLogin {
     }
 
     @PostMapping("/iniciarSesion")
-    public String login(@ModelAttribute("usuario") Usuario user, Model modelo, RedirectAttributes redirectAttributes) {
+    public String login(@ModelAttribute("usuario") Usuario user, Model modelo,HttpSession sesion) {
         
-        Cliente iniciar = clienterServicio.loginCliente(user.getCorreo(), user.getPassword());
-        if (iniciar == null) {
+        Cliente cliente = clienterServicio.loginCliente(user.getCorreo(), user.getPassword());
+        if (cliente == null) {
             modelo.addAttribute("mensajeError", "Email o contraseña incorrecta");
             return "login";
         } else {
+            sesion.setAttribute("user", cliente);
             
-            redirectAttributes.addFlashAttribute("nUser",  iniciar.getNombre1().charAt(0));
             return "redirect:/inicio";
         }
+    }
+    
+    @GetMapping("/login/logout")
+    public ModelAndView logout(HttpSession sesion, HttpServletRequest request){
+        sesion = request.getSession(false);
+        if(sesion != null){
+        sesion.invalidate();
+        }
+        return new ModelAndView("redirect:/inicio");
     }
 }
