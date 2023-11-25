@@ -96,9 +96,17 @@ public class ProductoController {
             }
            
         } catch (Exception e) {
-            return new ModelAndView("producto/registrar_producto")
+            if(sesion.getAttribute("index") != null){
+                AdminTienda admin = (AdminTienda) sesion.getAttribute("admin");
+                return new ModelAndView("producto/registrar_producto")
+                    .addObject("exception", e.getMessage())
+                        .addObject("admin", result);
+            }else{
+                return new ModelAndView("producto/registrar_producto")
                     .addObject("exception", e.getMessage());
-        }
+            }
+            
+            }
     }
 
     @GetMapping("productos/resultados")

@@ -33,6 +33,11 @@
                         </ul>
 
                         <div class="navbar-nav pt-2">
+                            <li class="nav-item pe-2">
+                                <a class="nav-link active d-flex" th:href="@{#}" target="contenido">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/3916/3916624.png" alt="CarIcon" width="30" height="24" class="d-inline-block align-text-top"><p th:text="${i} ? '${i}' : '(0)'"></p>
+                                </a>
+                            </li>
                             <div th:if="${usuario == null}">
                                 <li class="nav-item pe-2">
                                     <a class="btn btn-primary" th:href="@{/clienteLogin}" target="contenido">Login</a>
