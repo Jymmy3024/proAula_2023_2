@@ -13,6 +13,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -43,7 +44,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Inheritance(strategy = InheritanceType.JOINED) //Indicamos que habra herencia 
            // InheritanceType.JOINED -> la tabla padre y las tablas hijas por separado
-@Table(name = "usuarios")//INDICAMOS LA TABLA A LA QUE HACE REFERENCIA EN LA BASE DE DATOS
+@Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames="correo"))//INDICAMOS LA TABLA A LA QUE HACE REFERENCIA EN LA BASE DE DATOS
 public class Usuario implements Serializable{
     
     private static final long serialVersionUID = 1L;
