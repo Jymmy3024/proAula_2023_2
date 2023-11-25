@@ -58,38 +58,34 @@ public class ControladorLogin {
     }
 
     @PostMapping("/login/otros")
-    public ModelAndView otrosLogin(@RequestParam("admin") String admin, @RequestParam("repartidor") String repartidor, Usuario usuario, HttpSession sesion) {
+    public ModelAndView otrosLogin(@RequestParam("rol") String rol, Usuario usuario, HttpSession sesion) {
         ModelAndView modelo = new ModelAndView("login/login_others");
         try {
-            System.out.println(admin);
-            System.out.println(repartidor);
-            
-            if (admin != null && !admin.isEmpty()) {
+            System.out.println("seleccionado:" + rol);
 
-                if (this.adminServicio.exists(usuario.getCedula())) {
-                    //admin existe
-                    AdminTienda adminsesion = (AdminTienda) this.adminServicio.login(usuario.getCorreo(), usuario.getPassword());
+            if (rol != null && !rol.isEmpty()) {
+                if (rol.equals("admin")) { 
+                    if (this.adminServicio.existsByCorreo(usuario.getCorreo())) {
+                        //admin existe
+                        AdminTienda adminsesion = (AdminTienda) this.adminServicio.login(usuario.getCorreo(), usuario.getPassword());
 
-                    if (adminsesion != null) {
-                        sesion.setAttribute("admin", adminsesion);
-                        return new ModelAndView("redirect: /tienda/listar/productos");
+                        if (adminsesion != null) {
+                            sesion.setAttribute("admin", adminsesion);
+                            return new ModelAndView("redirect:/tienda/listar/productos")  ;
+                        }
                     }
-
-                } else {
                     //admin no existe
-
+                    //o datos incorrectos
                     modelo.addObject("mensajeError", "Email o contraseña incorrecta");
-
-                }
-
-            } else if (repartidor != null && !repartidor.isEmpty()) {
-
+                    
+                } else if (rol.equals("repartidor")) {
+                    System.out.println("REPARTIDOR SELECCIONADO");
+                }                
             }
             return modelo;
         } catch (Exception e) {
             e.printStackTrace();
             return modelo.addObject("mensajeError", e.getMessage());
         }
-
     }
 }

@@ -24,4 +24,6 @@ public interface AdminTiendaServicio {
     public List<AdminTienda> listByTienda(Tienda tienda);    
     
     public AdminTienda login(String correo, String password);
+
+    public boolean existsByCorreo(String correo);
 }
