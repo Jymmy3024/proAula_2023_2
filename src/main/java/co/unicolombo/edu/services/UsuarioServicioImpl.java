@@ -41,4 +41,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         }*/
     }
 
+    @Override
+    public boolean existeByCorreo(String correo) {
+        return this.repositorio.existsByCorreo(correo);
+    }
+
 }

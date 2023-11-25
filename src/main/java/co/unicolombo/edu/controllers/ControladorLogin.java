@@ -2,10 +2,11 @@ package co.unicolombo.edu.controllers;
 
 import co.unicolombo.edu.models.AdminTienda;
 import co.unicolombo.edu.models.Cliente;
+import co.unicolombo.edu.models.Repartidor;
 import co.unicolombo.edu.models.Usuario;
 import co.unicolombo.edu.services.AdminTiendaServicio;
 import co.unicolombo.edu.services.IClienteServicio;
-import co.unicolombo.edu.util.MensajeController;
+import co.unicolombo.edu.services.IRepartidorServicio;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ControladorLogin {
     private final IClienteServicio clienterServicio;
     @Autowired
     private AdminTiendaServicio adminServicio;
+    
+    @Autowired
+    private IRepartidorServicio repartidorService;
 
     @Autowired
     public ControladorLogin(IClienteServicio clienterServicio) {
@@ -64,23 +68,34 @@ public class ControladorLogin {
             System.out.println("seleccionado:" + rol);
 
             if (rol != null && !rol.isEmpty()) {
-                if (rol.equals("admin")) { 
+                if (rol.equals("admin")) {
                     if (this.adminServicio.existsByCorreo(usuario.getCorreo())) {
                         //admin existe
                         AdminTienda adminsesion = (AdminTienda) this.adminServicio.login(usuario.getCorreo(), usuario.getPassword());
 
                         if (adminsesion != null) {
                             sesion.setAttribute("admin", adminsesion);
-                            return new ModelAndView("redirect:/tienda/listar/productos")  ;
+                            return new ModelAndView("redirect:/tienda/listar/productos");
                         }
                     }
                     //admin no existe
                     //o datos incorrectos
                     modelo.addObject("mensajeError", "Email o contraseña incorrecta");
-                    
+
                 } else if (rol.equals("repartidor")) {
-                    System.out.println("REPARTIDOR SELECCIONADO");
-                }                
+                    if (this.repartidorService.existsByCorreo(usuario.getCorreo())) {
+                        //admin existe
+                        Repartidor repartidorSesion = (Repartidor) this.repartidorService.login(usuario.getCorreo(), usuario.getPassword());
+
+                        if (repartidorSesion != null) {
+                            sesion.setAttribute("repartidor", repartidorSesion);
+                            return new ModelAndView("repartidor/index_repartidor");
+                        }
+                    }
+                    //admin no existe
+                    //o datos incorrectos
+                    modelo.addObject("mensajeError", "Email o contraseña incorrecta");
+                }
             }
             return modelo;
         } catch (Exception e) {

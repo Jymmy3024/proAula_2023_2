@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -99,49 +98,12 @@ public class AdminTiendaController {
 
         try {
             //Verificamos si no hay un Usuario ya con esa cedula
-            boolean usuarioExiste = usuarioServicio.existeByCedula(adminTienda.getCedula());
-            /*if (!usuarioExiste) {
-                //si el usuario no existe hay que mandar a llenar todos los campos 
-                modelo = new ModelAndView("admin_tienda/crear_admin");
-                modelo.addObject("AdminTienda", adminTienda);
-                modelo.addObject("usuarioExiste", false);
-                return modelo;
-            } else {
-                //Verificamos si no hay un Usuario ya con esa cedula
-                System.out.println("USUARIO EXISTE = " + usuarioExiste);
-
-                //Si el usuario ya existe solo se deben mostrar los errores para esos campos
-                modelo = new ModelAndView("admin_tienda/crear_admin");
-                AdminTienda admin = new AdminTienda();
-                admin.setTienda(adminTienda.getTienda());
-                admin.setCedula(adminTienda.getCedula());
-                admin.setCargo(adminTienda.getCargo());
-                modelo.addObject("adminTienda", admin);
-
-                if (resultado.getFieldError("cedula") != null) {
-                    modelo.addObject("exception", resultado.getFieldError("cedula").getDefaultMessage());
-                }
-                if (resultado.getFieldError("cargo") != null) {
-                    modelo.addObject("exception", "El cargo no debe estar vacio");
-                }
-
-                modelo.addObject("usuarioExiste", true);
-
-                return modelo;
-            }
-             */
+            boolean usuarioExiste = usuarioServicio.existeByCedula(adminTienda.getCedula());            
             //Si todo esta bien podremos validar y guardar el admin
             System.out.println(adminTienda);
-            //try {
-            adminTienda = this.adminServicio.saveAdminTienda(adminTienda);
-            System.out.println("Guardado -----------------\n"+adminTienda);
-            //} catch (Exception e) {
-            //e.printStackTrace();
-            //si hay error en la validacion mandamos un mensaje de advertencia
-            /*Mensaje advertencia = new Mensaje("Error", e.getMessage());
-                return new MensajeController().mensajeAdvertencia(advertencia);*/
-            //}
 
+            adminTienda = this.adminServicio.saveAdminTienda(adminTienda);
+            
             //si se guardo, mandamos un mensaje de exito
             Mensaje mensajeExito = new Mensaje("Administrador guardado",
                     "El administrador se guardo con exito.\nYa puede ir a iniciar sesion.");

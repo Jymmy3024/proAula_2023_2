@@ -18,5 +18,7 @@ public interface UsuarioServicio {
     public Usuario buscarByCedula(String cedula);
     
     public void guardar(Usuario usuario) throws Exception;
+
+    public boolean existeByCorreo(String correo);
     
 }

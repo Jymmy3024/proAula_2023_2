@@ -1,5 +1,6 @@
 package co.unicolombo.edu.controllers;
 
+import co.unicolombo.edu.models.AdminTienda;
 import co.unicolombo.edu.models.Producto;
 import co.unicolombo.edu.models.ProductoGlobal;
 import co.unicolombo.edu.models.Tienda;
@@ -167,10 +168,11 @@ public class ProductoController {
         }
     }
     @GetMapping("tienda/listar/productos")
-    public ModelAndView listarProductosTienda(Pageable pageable){
+    public ModelAndView listarProductosTienda(Pageable pageable, HttpSession sesion){
         try{
             ModelAndView modelo = new ModelAndView("producto/listar_productos_tienda");
-            Tienda t = tServicio.obtenerPorNit(1000);
+            AdminTienda admin = (AdminTienda) sesion.getAttribute("admin");
+            Tienda t = admin.getTienda();
             modelo.addObject("tienda", t);
             System.out.println(t.getNombre());
             Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);

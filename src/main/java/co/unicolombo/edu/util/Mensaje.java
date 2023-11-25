@@ -26,7 +26,7 @@ public class Mensaje extends Exception {
 
     public Mensaje(Exception e) {
         this.titulo = "Error";
-        this.mensaje = e.toString();
+        this.mensaje = e.getMessage();
     }
 
 }
