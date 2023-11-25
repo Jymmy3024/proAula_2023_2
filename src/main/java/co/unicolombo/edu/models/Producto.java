@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -15,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -68,7 +71,13 @@ public class Producto implements Serializable {
     @Column(name = "estado", nullable = true)
     private String estado = "Activo";
 
-    
+    @ManyToMany
+    @JoinTable(
+            name = "detalle_pedido",
+            joinColumns = @JoinColumn(name = "codigo_pedido"),
+            inverseJoinColumns = @JoinColumn(name = "codigo_producto")
+    )
+    private List<Pedido> pedidos;
     
     
     @Override

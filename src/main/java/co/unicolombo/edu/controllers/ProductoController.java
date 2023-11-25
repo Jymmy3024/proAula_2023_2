@@ -8,6 +8,7 @@ import co.unicolombo.edu.models.Tienda;
 import co.unicolombo.edu.services.ITiendaServicio;
 import co.unicolombo.edu.services.ProductoGlobalServicio;
 import co.unicolombo.edu.services.ProductoServicio;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,7 +187,7 @@ public class ProductoController {
         try{
             AdminTienda admin = (AdminTienda) sesion.getAttribute("admin");
             ModelAndView modelo = new ModelAndView("producto/listar_productos_tienda");
-            Tienda t = tServicio.obtenerPorNit(4112);
+            Tienda t = tServicio.obtenerPorNit(1000);
             modelo.addObject("tienda", t);
             System.out.println(t.getNombre());
             Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
@@ -213,4 +214,14 @@ public class ProductoController {
                     .addObject("msjF", e.getMessage()); 
         }
     }
+    @PostMapping("productos/agregar/carrito")
+    public ModelAndView agregarCarrito(HttpServletRequest request){
+        String accion = request.getParameter("accion");
+        if(accion.equals("Agregar al Carrito")){
+            return new ModelAndView("redirect:/inicio");
+        }else{
+            return new ModelAndView("redirect:/tienda/listar/productos");
+        }
+    }
+    
 }    

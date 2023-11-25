@@ -9,9 +9,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +28,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name="locales")        
-public class Local {
+public class Local implements Serializable{
+
+    private static final long serialVersionUID = 1L;
     
     
     @Id
@@ -47,6 +52,8 @@ public class Local {
     @JoinColumn(name="tienda", nullable = false)
     Tienda tienda;
     
+    @OneToMany(mappedBy = "local_tienda", fetch = FetchType.LAZY)
+    private List<Pedido> pedidos;
     @Override
     public String toString(){
         return "Local{"+this.id
