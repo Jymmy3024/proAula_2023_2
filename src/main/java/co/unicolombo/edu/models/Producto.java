@@ -74,8 +74,8 @@ public class Producto implements Serializable {
     @ManyToMany
     @JoinTable(
             name = "detalle_pedido",
-            joinColumns = @JoinColumn(name = "codigo_pedido"),
-            inverseJoinColumns = @JoinColumn(name = "codigo_producto")
+            joinColumns = @JoinColumn(name = "codigo_producto"),
+            inverseJoinColumns = @JoinColumn(name = "codigo_pedido")
     )
     private List<Pedido> pedidos;
     

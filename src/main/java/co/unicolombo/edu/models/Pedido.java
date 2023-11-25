@@ -13,12 +13,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,20 +47,20 @@ public class Pedido implements Serializable{
     private String direccion;
     
     @Column(name = "fecha_pedido", nullable = false)
-    private LocalDate fecha_pedido = LocalDate.now();
+    private LocalDateTime fecha_pedido = LocalDateTime.now();
     
      @Column(name = "fecha_envio", nullable = true)
-    private LocalDate fecha_envio;
+    private LocalDateTime fecha_envio;
     
-     @Column(name = "fecha_entrego", nullable = true)
-    private LocalDate fecha_entrega;
+     @Column(name = "fecha_llegada", nullable = true)
+    private LocalDateTime fecha_llegada;
     
      @ManyToOne(optional = false, fetch = FetchType.LAZY)
      @JoinColumn(name = "repartidor", nullable = false)
     private Repartidor repartidor;
     
      @ManyToOne(optional = false , fetch = FetchType.LAZY) //un pedido tiene un loca
-     @JoinColumn(name = "pedidos", nullable = false)
+     @JoinColumn(name = "local_tienda", nullable = false)
      private Local local_tienda; 
      
      @ManyToOne(optional = false , fetch = FetchType.LAZY) //un pedido tiene un clienrte

@@ -87,7 +87,7 @@ public class ControladorLogin {
                 if (rol.equals("admin")) {
                     if (this.adminServicio.existsByCorreo(usuario.getCorreo())) {
                         //admin existe
-                        AdminTienda adminsesion = (AdminTienda) this.adminServicio.login(usuario.getCorreo(), usuario.getPassword());
+                        AdminTienda adminsesion =  this.adminServicio.login(usuario.getCorreo(), usuario.getPassword());
 
                         if (adminsesion != null) {
                             sesion.setAttribute("admin", adminsesion);
@@ -101,7 +101,7 @@ public class ControladorLogin {
                 } else if (rol.equals("repartidor")) {
                     if (this.repartidorService.existsByCorreo(usuario.getCorreo())) {
                         //admin existe
-                        Repartidor repartidorSesion = (Repartidor) this.repartidorService.login(usuario.getCorreo(), usuario.getPassword());
+                        Repartidor repartidorSesion = this.repartidorService.login(usuario.getCorreo(), usuario.getPassword());
 
                         if (repartidorSesion != null) {
                             sesion.setAttribute("repartidor", repartidorSesion);
