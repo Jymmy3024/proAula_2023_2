@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.unicolombo.edu.services;
 
 import co.unicolombo.edu.models.AdminTienda;
@@ -134,6 +131,25 @@ public class AdminTiendaServicioImpl implements AdminTiendaServicio {
         return this.repositorio.save(adminTienda);
         //Si ningun error fue encontrado podemos guardar el Administrador        
         //this.repositorio.save(adminTienda);
+    }
+
+    @Override
+    public AdminTienda login(String correo, String password) {
+        AdminTienda admin = null;
+        
+        if(correo != null && !correo.isEmpty() && password != null && !password.isEmpty()){            
+            
+            if(this.repositorio.existsByCorreoAndPassword(correo, password)){
+               admin = this.repositorio.findByCorreo(correo);
+            }
+        }
+        
+        return admin;
+    }
+
+    @Override
+    public boolean existsByCorreo(String correo) {
+        return this.repositorio.existsByCorreo(correo);
     }
 
 }

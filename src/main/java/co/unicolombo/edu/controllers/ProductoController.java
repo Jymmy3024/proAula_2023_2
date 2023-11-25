@@ -1,5 +1,4 @@
 package co.unicolombo.edu.controllers;
-
 import co.unicolombo.edu.models.AdminTienda;
 import co.unicolombo.edu.models.Cliente;
 import co.unicolombo.edu.models.Producto;
@@ -186,7 +185,7 @@ public class ProductoController {
         try{
             AdminTienda admin = (AdminTienda) sesion.getAttribute("admin");
             ModelAndView modelo = new ModelAndView("producto/listar_productos_tienda");
-            Tienda t = tServicio.obtenerPorNit(4112);
+            Tienda t = tServicio.obtenerPorNit(admin.getTienda().getNit());
             modelo.addObject("tienda", t);
             System.out.println(t.getNombre());
             Page<Producto> listPro = pServicio.listAllByTienda(t, pageable);
