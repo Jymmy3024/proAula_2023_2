@@ -5,6 +5,7 @@
 package co.unicolombo.edu.util;
 
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -22,7 +23,6 @@ public class MensajeController {
     
     
     public ModelAndView mensajeExitoso(Mensaje mensajeExito){               
-        
         return new ModelAndView("mensajes/exito")
                 .addObject("mensaje", mensajeExito);
     }

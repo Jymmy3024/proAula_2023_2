@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -73,6 +74,7 @@ public class AdminTiendaController {
                     } else {
                         //no hay errores en los datos del admin
                         //se puede guardar
+                        
                         return this.guardarAdmin(adminTienda);
 
                     }
@@ -107,7 +109,7 @@ public class AdminTiendaController {
             //si se guardo, mandamos un mensaje de exito
             Mensaje mensajeExito = new Mensaje("Administrador guardado",
                     "El administrador se guardo con exito.\nYa puede ir a iniciar sesion.");
-            return new MensajeController().mensajeExitoso(mensajeExito);
+            return new MensajeController().mensajeExitoso(mensajeExito).addObject("admin", "admin");
 
         } catch (JpaSystemException e) {
             Mensaje advertencia = new Mensaje("Error", e.getMessage());

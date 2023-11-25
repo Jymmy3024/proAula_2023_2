@@ -123,14 +123,14 @@
                                             <ul class="navbar-nav">
                                                 <div th:if="${admin == null}">
                                                     <li class="nav-item pe-2">
-                                                        <a class="btn btn-primary" th:href="@{/clienteLogin}" target="contenido">Login</a>
+                                                        <a class="btn btn-primary" th:href="@{/login/otros}" target="contenido">Login</a>
                                                     </li>
                                                 </div>
                                                 <div th:if="${admin != null}">
                                    
                                                     <div class="dropdown pe-2">
-                                                        <a class="btn btn-primary dropdown-toggle" role="button" 
-                                                           id="logout" data-bs-toggle="dropdown" aria-expanded="false" th:text="${usuario}" ></a>
+                                                        <a class="btn btn-primary dropdown-toggle fw-bold" role="button" 
+                                                           id="logout" data-bs-toggle="dropdown" aria-expanded="false" th:text="${admin}" ></a>
                                                         <ul class="dropdown-menu text-center" aria-labelledby="logout">
                                                             <li><a class="dropdown-item bg-primary" style="border-radius: 3em" th:href="@{/login/logout}" id="item">Logout</a></li>
                                                         </ul>

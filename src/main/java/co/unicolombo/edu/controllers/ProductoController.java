@@ -42,10 +42,12 @@ public class ProductoController {
     private ITiendaServicio tServicio;  //SERVICIO DE LAS TIENDAS    
 
     @GetMapping("productos/agregar")//@param es para obtener el parametro de busqueda "?busqueda="
-    public ModelAndView showFormAddProducts(@Param("busqueda") String busqueda) {
+    public ModelAndView showFormAddProducts(@Param("busqueda") String busqueda, HttpSession sesion) {
+        AdminTienda admin =(AdminTienda) sesion.getAttribute("admin");
         List<ProductoGlobal> resultados = pgServicio.listAll(busqueda);
         return new ModelAndView("producto/agregar_producto").addObject("busqueda", busqueda)
-                .addObject("productos", resultados);
+                .addObject("productos", resultados)
+                .addObject("admin", admin.getNombre1().toUpperCase().charAt(0));
     }
 
     @PostMapping("productos/registrar/")
@@ -54,13 +56,15 @@ public class ProductoController {
         /**
          * ***********LA DEBEMOS OBTENER POR MEDIO DEL EMPLEADO EN SESION*
          */
-        Tienda t = tServicio.obtenerPorNit(1000);
+        AdminTienda admin =(AdminTienda) sesion.getAttribute("admin");
+        Tienda t = tServicio.obtenerPorNit(admin.getTienda().getNit());
         Producto p = new Producto();
         p.setProductoGlobal(pgServicio.getByCodigo(codigoPg));
         p.setTienda(t);
 
         return new ModelAndView("producto/registrar_producto")
-                .addObject("producto", p);
+                .addObject("producto", p)
+                .addObject("admin", admin.getNombre1().toUpperCase().charAt(0));
     }
 
     @PostMapping("productos/agregar")
@@ -70,7 +74,7 @@ public class ProductoController {
                     .addObject("producto", producto);
         }
         try {
-            Cliente cliente =(Cliente) sesion.getAttribute("user");
+            AdminTienda admin =(AdminTienda) sesion.getAttribute("admin");
             //Recuperamos la tienda y el producto global
             Tienda tienda = tServicio.obtenerPorNit(producto.getTienda().getNit());
             ProductoGlobal productoGlobal = pgServicio.getByCodigo(producto.getProductoGlobal().getCodigo());
@@ -84,11 +88,11 @@ public class ProductoController {
 
             //finalmente lo guardamos
             pServicio.guardarProducto(producto);
-            if(cliente != null){
-                return this.showFormAddProducts(null)
-                        .addObject("usuario", cliente.getNombre1().toUpperCase().charAt(0));
+            if(admin != null){
+                return this.showFormAddProducts(null, sesion)
+                        .addObject("admin", admin.getNombre1().toUpperCase().charAt(0));
             }else{
-                 return this.showFormAddProducts(null);
+                 return this.showFormAddProducts(null, null);
             }
            
         } catch (Exception e) {
@@ -118,10 +122,15 @@ public class ProductoController {
                 if (productosInTiendas != null && !productosInTiendas.isEmpty()) {
                     modelo.addObject("productosInTienda", productosInTiendas);
                 }
-            }
-            
-            return modelo.addObject("busqueda", busqueda)
+                if(cliente != null){
+                    return modelo.addObject("busqueda", busqueda)
                     .addObject("usuario", cliente.getNombre1().toUpperCase().charAt(0));
+                }else{
+                    return modelo.addObject("busqueda", busqueda);
+                }
+            }
+           
+            return modelo.addObject("busqueda", busqueda);
 
         } catch (Exception e) {
             return new ModelAndView("busqueda")
