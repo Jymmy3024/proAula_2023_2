@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Agregar Producto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+              rel="stylesheet" 
+              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <style th:replace="~{plantillas/indexPartes :: estilos}"></style>
+    </head>
+    <body>
+        <header th:replace="~{plantillas/indexPartes :: cabecera-gTiendas}"></header>
+        <br>
+        <div class="container" style="min-height: 533px;">
+            <h2 class="text-center">Agregar Producto a la tienda</h2>
+
+            <form th:action="@{/productos/agregar}" method="get">
+
+                <div class="input-group mb-3">
+                    <input type="search" aria-label="search " class="form-control" name="busqueda" th:value="${busqueda}" placeholder="Busque el Producto que desea agregar" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" id="button-addon2">Buscar</button>
+                    </div>
+                </div>
+            </form>
+            <br>                                                
+            <br>
+            <!--<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">-->
+            <small class="text-muted">Resultados:</small>
+            <div class="card">
+                <div class="card-body ">
+                    <div th:if="${productos} != null AND ${busqueda} != null">
+                        <div th:if="${! #lists.isEmpty(productos)}">
+                            <div th:each="pg : ${productos}">
+                                <br>
+                                <div class="card" style="max-width: 100%;">
+                                    <div class="row no-gutters" style="height: 200px; ">
+                                        <div class="col-md-2 ps-3 my-5" style="overflow: hidden; max-height: 100%">
+                                            <img class="img-fluid rounded-start" style="width: 180px; height: auto; display: block" width="" th:src="@{/assets/{filename}(filename=${pg.ruta_imagen})}" alt="Error al mostrar la imagen">
+                                        </div>
+                                        <div class="col-md-10 pe-3">
+                                            <div class="card-body">
+                                                <h5 class="card-title" th:text="${pg.nombre}">Nombre del producto</h5>
+                                                <p class="card-text" ><small class="text-muted" th:text="'Codigo : ' + ${pg.codigo}">Codigo del producto</small></p>
+                                                <p class="card-text"><small class="text-muted" th:text="'Categoria : '+${pg.categoria.nombre}">Categoria del producto</small></p>
+                                                <p class="card-text" style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis" th:text="${pg.descripcion}">Descripcion del producto</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 mr-3 me-3" style="text-align: right">
+
+                                        <form method="POST" th:action="@{/productos/registrar/}">
+                                            <a class="btn btn-secondary">Ver</a> 
+                                            <input type="hidden" id="codProdGlobal" name="codProdGlobal" th:value="${pg.codigo}">
+                                            <button type="submit" class="btn btn-success">Agregar</button>
+                                        </form>                                                                                                                    
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        <div th:if="${#lists.isEmpty(productos)}">
+                            <small class='text-danger'>No se encontraron resultados</small>    
+                        </div>
+
+                    </div>   
+                </div>
+            </div>
+            <br>                     
+            <h5 class="text-muted">
+                Si no existe el producto puedes crearlo desde cero : <a class="btn btn-link" th:href="@{/producto_global/registrar}">Crear nuevo producto</a>
+            </h5>
+            <br>
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        </div>
+        <footer th:replace="~{plantillas/indexPartes :: piePagina}"></footer>  
+    </body>
+</html>

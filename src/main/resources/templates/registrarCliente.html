@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <title>Formulario Cliente</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/estiloFormulario.css">
+
+    <script src="js/mensajeFormulario.js"></script>
+
+
+</head>
+
+<body>
+    <div class="modal-dialog text-center">
+        <div class="col-sm-8 main-section">
+            <div class="modal-content">
+                <div class="col-12 user-img">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1208/1208737.png" width="40%" />
+                </div>
+                <div th:if="${ exception} != null">
+                    <span class="text-danger" th:text="${exception}">   
+                                        <a href="registrarCliente.html"></a>
+                                    </span>
+                </div>
+                <form class="col-12" th:action="@{/guardarCliente}" method="POST" th:object="${cliente}">
+                    <div class="form-group">
+
+                        <label for="InputCedula">
+                                            Cedula
+                                        </label>
+                        <input type="number" class="form-control" id="InputCedula" th:field="*{cedula}" required/>
+                        <span th:if="${#fields.hasErrors('cedula')}" class="text-danger" th:errors="*{cedula}">   
+                                        </span>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="nombre">
+                                            Primer Nombre
+                                        </label>
+                        <input id="nombre" type="text" class="form-control" th:field="*{nombre1}" required/>
+                        <span th:if="${#fields.hasErrors('nombre1')}" class="text-danger" th:errors="*{nombre1}">   
+                                        </span>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="InputNombre2">
+                                            Segundo Nombre
+                                        </label>
+                        <input type="text" class="form-control" id="InputNombre2" th:field="*{nombre2}" />
+                        <span th:if="${#fields.hasErrors('nombre2')}" class="text-danger" th:errors="*{nombre2}">   
+                                        </span>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="apellido">
+                                            Primer Apellido
+                                        </label>
+                        <input id="apellido" type="text" class="form-control" th:field="*{apellido1}" required/>
+                        <span th:if="${#fields.hasErrors('apellido1')}" class="text-danger" th:errors="*{apellido1}">
+                                        </span>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="InputApellido2">
+                                            Segundo Apellido
+                                        </label>
+                        <input type="text" class="form-control" id="InputApellido2" th:field="*{apellido2}" />
+                        <span th:if="${#fields.hasErrors('apellido2')}" class="text-danger" th:errors="*{apellido2}">
+                                        </span>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="InputEmail">
+                                            Email
+                                        </label>
+                        <input type="email" class="form-control" id="InputEmail" th:field="*{correo}" />
+                        <span th:if="${#fields.hasErrors('correo')}" class="text-danger" th:errors="*{correo}">
+                                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputContraseña">
+                                            Password
+                                        </label>
+                        <input type="password" class="form-control" id="InputContraseña" th:field="*{password}" />
+                        <span th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}">
+                                        </span>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="InputFecha">
+                                            Fecha de nacimiento
+                                        </label>
+                        <input type="date" class="form-control" id="InputFecha" th:field="*{fecha_nacimiento}" />
+                        <span th:if="${#fields.hasErrors('fecha_nacimiento')}" class="text-danger" th:errors="*{fecha_nacimiento}">
+                                        </span>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="InputGenero">
+                                            Genero
+                                        </label>
+                        <input type="text" class="form-control" id="InputGenero" th:field="*{genero}" />
+                        <span th:if="${#fields.hasErrors('genero')}" class="text-danger" th:errors="*{genero}">
+                                        </span>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="InputGenero">
+                                            Direccion
+                                        </label>
+                        <input type="text" class="form-control" id="InputGenero" th:field="*{direccion_envio}" />
+                        <span th:if="${#fields.hasErrors('direccion_envio')}" class="text-danger" th:errors="*{direccion_envio}">
+                                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                                            Registrame como cliente
+                                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

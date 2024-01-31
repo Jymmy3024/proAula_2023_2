@@ -1,0 +1,71 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 28/10/2023, 11:31:22 a. m.
+    Author     : York Severiche
+*/
+
+body{
+    background:url('https://www.enretail.com/wp-content/uploads/2020/03/eCommerce-1.jpg') no-repeat center center fixed ; 
+    background-size: cover;
+}
+
+.user-img{
+    margin-top: -50px;
+    margin-bottom: 35px;
+}
+
+.user-img img{
+    width: 100px;
+    height: 100px;
+    box-shadow: 0px 0px 3px red;
+    border-radius: 50%;
+}
+
+.main-section{
+    margin:0 auto;
+    margin-top: 25%;
+    padding: 0;
+}
+
+.modal-content{
+    background-color: darkslategray;
+    opacity: .95;
+    padding: 0 20px;
+    box-shadow: 0px 0px 3px red;
+}
+
+.form-group input{
+    height: 42px;
+    font-size: 18px;
+    border: 0;
+    padding-left: 54px;
+    border-radius: 50px;
+}
+
+.input-icon{
+    position: absolute;
+    left: 28px;
+    font-size: 22px;
+    padding-top: 10px;
+}
+
+button{
+    width: 60%;
+    margin: 5px 0 25px;
+}
+
+.forgot{
+    padding: 5px 0;
+}
+
+.forgot a{
+    color: white;
+}
+
+.registro a{
+    color: white;
+}
+
